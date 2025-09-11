@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useState, useRef } from 'react';
@@ -12,6 +13,7 @@ import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-github';
 import toast from 'react-hot-toast';
 import { Upload, X } from 'lucide-react';
+import Image from 'next/image';
 
 const CATEGORIES = [
   'Web Development',
@@ -286,7 +288,13 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
           </div>
           {imagePreview && (
             <div className="mt-2">
-              <img src={imagePreview} alt="Preview" className="max-w-[200px] rounded-lg" />
+              <Image
+                src={imagePreview}
+                alt="Preview"
+                className="max-w-[200px] rounded-lg"
+                width={200}
+                height={200}
+              />
             </div>
           )}
         </div>

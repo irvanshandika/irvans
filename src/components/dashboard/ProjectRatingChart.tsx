@@ -11,7 +11,6 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { Card } from '@/src/components/ui/card';
 
 // Data dummy untuk grafik rating proyek
 const generateRatingData = () => {

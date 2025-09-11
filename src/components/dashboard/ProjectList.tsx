@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Button } from '@/src/components/ui/button';
@@ -129,15 +129,12 @@ export default function ProjectList() {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full md:w-1/4 md:max-w-[200px]">
                 {project.imageUrl ? (
-                  <img
-                    src={project.imageUrl} 
-                    alt={project.title} 
+                  <Image
+                    src={project.imageUrl}
+                    alt={project.title}
                     className="rounded-lg object-cover w-full h-40 transition-transform group-hover:scale-[1.02]"
-                    onError={(e) => {
-                      // Replace with placeholder on error
-                      (e.target as HTMLImageElement).src = '/placeholder-image.svg';
-                      (e.target as HTMLImageElement).classList.add('p-4', 'bg-muted');
-                    }}
+                    width={200}
+                    height={200}
                   />
                 ) : (
                   <div className="rounded-lg bg-muted w-full h-40 flex items-center justify-center">
