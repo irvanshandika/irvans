@@ -110,75 +110,94 @@ export default function ProjectList() {
   }
 
   return (
-    <div className="space-y-4">
-      {projects.map((project) => (
-        <div key={project.id} className="p-4 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full md:w-1/4">
-              {project.imageUrl ? (
-                <img
-                  src={project.imageUrl} 
-                  alt={project.title} 
-                  className="rounded-lg object-cover w-full h-32"
-                  onError={(e) => {
-                    // Replace with placeholder on error
-                    (e.target as HTMLImageElement).src = '/placeholder-image.svg';
-                    (e.target as HTMLImageElement).classList.add('p-4', 'bg-muted');
-                  }}
-                />
-              ) : (
-                <div className="rounded-lg bg-muted w-full h-32 flex items-center justify-center">
-                  <span className="text-muted-foreground text-sm">No image</span>
-                </div>
-              )}
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
-                <div>
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {project.categories.map((category) => (
-                      <span 
-                        key={category} 
-                        className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                      >
-                        {category}
-                      </span>
-                    ))}
+    <div className="space-y-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-medium">Total Projects: {projects.length}</h2>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex items-center gap-1"
+          onClick={() => fetchProjects()}
+        >
+          Refresh
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        {projects.map((project) => (
+          <div key={project.id} className="group p-5 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 hover:border-primary/30">
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="w-full md:w-1/4 md:max-w-[200px]">
+                {project.imageUrl ? (
+                  <img
+                    src={project.imageUrl} 
+                    alt={project.title} 
+                    className="rounded-lg object-cover w-full h-40 transition-transform group-hover:scale-[1.02]"
+                    onError={(e) => {
+                      // Replace with placeholder on error
+                      (e.target as HTMLImageElement).src = '/placeholder-image.svg';
+                      (e.target as HTMLImageElement).classList.add('p-4', 'bg-muted');
+                    }}
+                  />
+                ) : (
+                  <div className="rounded-lg bg-muted w-full h-40 flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">No image</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">{project.description}</p>
-                </div>
-                <div className="flex flex-col items-start sm:items-end">
-                  <div className="flex">{renderStars(project.rating)}</div>
-                  <span className="text-xs text-muted-foreground mt-1">
-                    Updated {formatDate(project.updatedAt)}
-                  </span>
-                </div>
+                )}
               </div>
-              <div className="flex justify-end gap-2 mt-4">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex items-center gap-1"
-                  onClick={() => window.location.href = `/dashboard/projects/edit/${project.id}`}
-                >
-                  <Edit size={14} />
-                  Edit
-                </Button>
-                <Button 
-                  variant="destructive" 
-                  size="sm" 
-                  className="flex items-center gap-1"
-                  onClick={() => handleDelete(project.id)}
-                >
-                  <Trash2 size={14} />
-                  Delete
-                </Button>
+              <div className="flex-1">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
+                  <div>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{project.title}</h3>
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {project.categories.map((category) => (
+                        <span 
+                          key={category} 
+                          className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                        >
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{project.description}</p>
+                  </div>
+                  <div className="flex flex-col items-start sm:items-end">
+                    <div className="flex">{renderStars(project.rating)}</div>
+                    <div className="flex flex-col items-end mt-1 space-y-1">
+                      <span className="text-xs text-muted-foreground">
+                        Created: {formatDate(project.createdAt)}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        Updated: {formatDate(project.updatedAt)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end gap-3 mt-5">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-1.5 hover:bg-primary/10 transition-colors"
+                    onClick={() => window.location.href = `/dashboard/projects/edit/${project.id}`}
+                  >
+                    <Edit size={14} />
+                    Edit
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    size="sm" 
+                    className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity"
+                    onClick={() => handleDelete(project.id)}
+                  >
+                    <Trash2 size={14} />
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

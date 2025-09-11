@@ -95,6 +95,48 @@ export function UserAuthStatus() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
+          <Link href="/dashboard" className="cursor-pointer flex items-center">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="mr-2"
+            >
+              <path
+                d="M3 3H10.2V10.2H3V3Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M13.8 3H21V10.2H13.8V3Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M3 13.8H10.2V21H3V13.8Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M13.8 13.8H21V21H13.8V13.8Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href="/profile" className="cursor-pointer flex items-center">
             <svg
               width="16"
