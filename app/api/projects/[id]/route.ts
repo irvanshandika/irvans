@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/src/app/api/auth/[...nextauth]/route';
 import { PrismaClient } from '@prisma/client';
 import { deleteImageFromCloudinary, getPublicIdFromUrl } from '@/src/lib/cloudinary';
 
 const prisma = new PrismaClient();
 
 // GET a single project by ID
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     
     const project = await prisma.project.findUnique({
       where: {
-        id: params.id,
+        id: (await context.params).id,
       },
     });
     
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 // PUT update a project
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -49,7 +49,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     // Check if project exists and belongs to user
     const existingProject = await prisma.project.findUnique({
       where: {
-        id: params.id,
+        id: (await context.params).id,
       },
     });
     
@@ -89,7 +89,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     // Update project
     const updatedProject = await prisma.project.update({
       where: {
-        id: params.id,
+        id: (await context.params).id,
       },
       data: {
         title: data.title,
@@ -110,7 +110,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 // DELETE a project
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -121,7 +121,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     // Check if project exists and belongs to user
     const existingProject = await prisma.project.findUnique({
       where: {
-        id: params.id,
+        id: (await context.params).id,
       },
     });
     
@@ -150,7 +150,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     // Delete project
     await prisma.project.delete({
       where: {
-        id: params.id,
+        id: (await context.params).id,
       },
     });
     
