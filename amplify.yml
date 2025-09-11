@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install bun
+        - npm install -g bun
         - bun install
     build:
       commands:
