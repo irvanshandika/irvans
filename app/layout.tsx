@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/src/components/theme-provider";
 import { AuthProvider } from "@/src/components/auth/AuthProvider";
 import { ReCaptchaProvider } from "@/src/components/auth/ReCaptchaProvider";
 import {Toaster} from 'react-hot-toast'
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "Irvans | Full Stack Developer Portfolio",
@@ -56,7 +56,7 @@ export default function RootLayout({
       <body className="antialiased">
         <AuthProvider>
           <ReCaptchaProvider>
-            <GoogleTagManager gtmId="G-QWFK1HLP35" />
+            <GoogleAnalytics gaId="G-QWFK1HLP35" />
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
