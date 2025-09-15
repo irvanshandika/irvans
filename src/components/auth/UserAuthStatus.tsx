@@ -37,7 +37,7 @@ export function UserAuthStatus() {
   }
 
   const handleSignOut = async () => {
-    toast.success(`Sampai Jumpa Kembali, ${session.user?.name}!`, {
+    toast.success(`See You Again, ${session.user?.name}!`, {
       duration: 5000, // Toast will stay for 5 seconds
     });
     await signOut({ callbackUrl: "/" });

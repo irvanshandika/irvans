@@ -21,9 +21,10 @@ export default function LoginPage() {
         email: values.email,
         password: values.password,
         redirect: false,
+        callbackUrl: "/"
       });
 
-      if (result?.error) {
+      if (!result || result.error) {
         toast.dismiss(loadingToast);
         toast.error("Email atau password salah", {
           duration: 3000,
@@ -39,7 +40,7 @@ export default function LoginPage() {
 
       // Add delay before redirect
       setTimeout(() => {
-        router.push("/");
+        router.push(result.url || "/");
         router.refresh();
       }, 1000);
     } catch (error) {

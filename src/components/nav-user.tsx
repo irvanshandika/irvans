@@ -125,7 +125,7 @@ export function NavUser({ user: propUser }: NavUserProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => {
-              toast.success(`Sampai Jumpa Kembali, ${user?.name}!`)
+              toast.success(`See You Again, ${user?.name}!`)
               signOut({ callbackUrl: "/" })
             }}>
               <IconLogout className="mr-2" />
