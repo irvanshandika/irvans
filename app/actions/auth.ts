@@ -52,6 +52,14 @@ export async function registerUser(data: RegisterFormData) {
         name: data.name,
         email: data.email,
         password: hashedPassword,
+        accounts: {
+          create: {
+            type: "credentials",
+            provider: "credentials",
+            providerAccountId: data.email,
+            role: "user", // Set default role sebagai "user"
+          },
+        },
       },
     });
 
@@ -92,6 +100,14 @@ export async function registerAction(formData: FormData) {
         name,
         email,
         password: hashedPassword,
+        accounts: {
+          create: {
+            type: "credentials",
+            provider: "credentials",
+            providerAccountId: email,
+            role: "user", // Set default role sebagai "user"
+          },
+        },
       },
     });
 

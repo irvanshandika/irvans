@@ -7,6 +7,8 @@ import {
   IconTrash,
   type Icon,
 } from "@tabler/icons-react"
+import { usePathname } from "next/navigation"
+import Link from "next/link"
 
 import {
   DropdownMenu,
@@ -35,6 +37,7 @@ export function NavDocuments({
   }[]
 }) {
   const { isMobile } = useSidebar()
+  const pathname = usePathname()
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -42,11 +45,16 @@ export function NavDocuments({
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
-              <a href={item.url}>
-                <item.icon />
-                <span>{item.name}</span>
-              </a>
+            <SidebarMenuButton 
+              asChild
+              className={pathname === item.url || pathname.startsWith(item.url) ? "bg-muted" : ""}
+            >
+              <Link href={item.url}>
+                <item.icon className={pathname === item.url || pathname.startsWith(item.url) ? "text-primary" : ""} />
+                <span className={pathname === item.url || pathname.startsWith(item.url) ? "font-medium text-primary" : ""}>
+                  {item.name}
+                </span>
+              </Link>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

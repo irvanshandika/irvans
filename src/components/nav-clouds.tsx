@@ -1,4 +1,6 @@
 import { type Icon } from "@tabler/icons-react"
+import { usePathname } from "next/navigation"
+import Link from "next/link"
 
 import {
   SidebarGroup,
@@ -25,6 +27,8 @@ export function NavClouds({
   }[]
   className?: string
 }) {
+  const pathname = usePathname()
+  
   return (
     <SidebarGroup className={className}>
       <SidebarGroupLabel>Modules</SidebarGroupLabel>
@@ -44,8 +48,13 @@ export function NavClouds({
                         <SidebarMenuButton
                           asChild
                           tooltip={subItem.title}
+                          className={pathname === subItem.url ? "bg-muted" : ""}
                         >
-                          <a href={subItem.url}>{subItem.title}</a>
+                          <Link href={subItem.url}>
+                            <span className={pathname === subItem.url ? "font-medium text-primary" : ""}>
+                              {subItem.title}
+                            </span>
+                          </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}
@@ -56,11 +65,17 @@ export function NavClouds({
 
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild tooltip={item.title}>
-                  <a href={item.url}>
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
-                  </a>
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip={item.title}
+                  className={pathname === item.url || pathname.startsWith(item.url) ? "bg-muted" : ""}
+                >
+                  <Link href={item.url}>
+                    {item.icon && <item.icon className={pathname === item.url || pathname.startsWith(item.url) ? "text-primary" : ""} />}
+                    <span className={pathname === item.url || pathname.startsWith(item.url) ? "font-medium text-primary" : ""}>
+                      {item.title}
+                    </span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )

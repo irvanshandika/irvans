@@ -18,7 +18,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           {session?.user?.email && (
             <span className="text-sm text-muted-foreground hidden md:inline-block">
-              {session.user.name}
+              Welcome Back {session.user.name} !
             </span>
           )}
           <ModeToggle />
