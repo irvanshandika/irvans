@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/src/components/ui/form';
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/theme-monokai';
-import 'ace-builds/src-noconflict/theme-github';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import CodeBlock from '@tiptap/extension-code-block';
+import Highlight from '@tiptap/extension-highlight';
 import toast from 'react-hot-toast';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, Bold, Italic, Code, List, ListOrdered, Heading1, Heading2 } from 'lucide-react';
 import Image from 'next/image';
 
 const CATEGORIES = [
@@ -51,9 +51,38 @@ type ProjectFormProps = {
 export default function ProjectForm({ onSuccess, projectId, initialData }: ProjectFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialData?.categories || []);
-  const [codeValue, setCodeValue] = useState(initialData?.code || '');
   const [imagePreview, setImagePreview] = useState<string | null>(initialData?.imageUrl || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Tiptap Editor setup
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      CodeBlock,
+      Highlight,
+    ],
+    content: initialData?.code ? 
+      // Coba parse JSON jika konten dalam format JSON, jika gagal gunakan sebagai string
+      (() => {
+        try {
+          return JSON.parse(initialData.code);
+        } catch (e) {
+          return initialData.code;
+        }
+      })() : 
+      '',
+    onUpdate: ({ editor }) => {
+      // Menyimpan konten editor dalam format JSON
+      const json = editor.getJSON();
+      form.setValue('code', JSON.stringify(json));
+    },
+    editorProps: {
+      attributes: {
+        class: 'focus:outline-none',
+      },
+    },
+    immediatelyRender: false, // Mengatasi error SSR hydration mismatch
+  });
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -62,6 +91,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       categories: initialData?.categories || [],
       code: initialData?.code || '',
     },
+    mode: 'onChange',
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +152,11 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
       // Add selected categories and code to form data
       data.categories = selectedCategories;
-      data.code = codeValue;
+      // Pastikan data code sudah diupdate oleh editor Tiptap
+      if (!data.code && editor) {
+        const json = editor.getJSON();
+        data.code = JSON.stringify(json);
+      }
       
       // Handle image upload
       let imageUrl = initialData?.imageUrl || null;
@@ -163,7 +197,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         title: data.title,
         description: data.description,
         categories: selectedCategories,
-        code: codeValue,
+        code: data.code,
         imageUrl,
       };
       
@@ -191,7 +225,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       if (!projectId) {
         form.reset();
         setSelectedCategories([]);
-        setCodeValue('');
+        editor?.commands.clearContent();
         setImagePreview(null);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
@@ -259,16 +293,77 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
         <div className="space-y-2">
           <Label>Code Editor</Label>
-          <AceEditor
-            mode="javascript"
-            theme="monokai"
-            onChange={setCodeValue}
-            value={codeValue}
-            name="code-editor"
-            editorProps={{ $blockScrolling: true }}
-            width="100%"
-            height="200px"
-          />
+          <div className="border rounded-md p-1">
+            <div className="flex items-center gap-1 border-b p-1 mb-1">
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleBold().run()}
+                className={editor?.isActive('bold') ? 'bg-muted' : ''}
+              >
+                <Bold className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                className={editor?.isActive('italic') ? 'bg-muted' : ''}
+              >
+                <Italic className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
+                className={editor?.isActive('codeBlock') ? 'bg-muted' : ''}
+              >
+                <Code className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                className={editor?.isActive('bulletList') ? 'bg-muted' : ''}
+              >
+                <List className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+                className={editor?.isActive('orderedList') ? 'bg-muted' : ''}
+              >
+                <ListOrdered className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+                className={editor?.isActive('heading', { level: 1 }) ? 'bg-muted' : ''}
+              >
+                <Heading1 className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+                className={editor?.isActive('heading', { level: 2 }) ? 'bg-muted' : ''}
+              >
+                <Heading2 className="h-4 w-4" />
+              </Button>
+            </div>
+            <EditorContent 
+              editor={editor} 
+              className="min-h-[200px] p-2 focus:outline-none prose dark:prose-invert max-w-none" 
+            />
+          </div>
         </div>
 
         <div className="space-y-2">
@@ -306,7 +401,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             onClick={() => {
               form.reset();
               setSelectedCategories([]);
-              setCodeValue('');
+              editor?.commands.clearContent();
               setImagePreview(null);
             }}
           >

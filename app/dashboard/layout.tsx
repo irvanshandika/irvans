@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
-import { PrismaClient } from '@prisma/client';
 import { AppSidebar } from '@/src/components/app-sidebar';
 import { SidebarProvider, SidebarInset } from '@/src/components/ui/sidebar';
 import { SiteHeader } from '@/src/components/site-header';
