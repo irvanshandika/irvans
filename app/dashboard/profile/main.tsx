@@ -1,7 +1,5 @@
 'use client';
-
 import { useState } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Textarea } from '@/src/components/ui/textarea';
@@ -28,8 +26,6 @@ export default function ProfileMain() {
   
   return (
     <div className="container mx-auto py-6">
-      <Toaster position="top-right" />
-      
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Profile</h1>
         <p className="text-gray-500">Manage your account information</p>

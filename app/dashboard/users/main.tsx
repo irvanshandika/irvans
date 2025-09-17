@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Loader2, UserPlus, Edit, Check, X } from 'lucide-react';
 import { Button } from '@/src/components/ui/button';
 import {
@@ -99,14 +99,12 @@ export default function UsersMain() {
   
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <Toaster position="top-right" />
-      
-      <Card className="mb-8 border-none shadow-sm">
+      <Card className="mb-8 border-none shadow-sm dark:bg-gray-800">
         <CardHeader className="pb-4">
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle className="text-2xl font-medium">Pengguna</CardTitle>
-              <CardDescription className="text-muted-foreground mt-1">
+              <CardTitle className="text-2xl font-medium dark:text-white">Pengguna</CardTitle>
+              <CardDescription className="text-muted-foreground mt-1 dark:text-gray-400">
                 Kelola akun pengguna dan hak akses
               </CardDescription>
             </div>
@@ -119,7 +117,7 @@ export default function UsersMain() {
         </CardHeader>
       </Card>
       
-      <Card className="border-none shadow-sm overflow-hidden bg-white">
+      <Card className="border-none shadow-sm overflow-hidden bg-white dark:bg-gray-800">
         <CardContent className="p-0">
           {loading ? (
             <div className="flex justify-center items-center p-12">
@@ -129,41 +127,41 @@ export default function UsersMain() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b bg-muted/30">
-                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Nama</th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Email</th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Role</th>
-                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Tanggal Bergabung</th>
-                    <th className="px-6 py-4 text-right text-sm font-medium text-muted-foreground">Aksi</th>
+                  <tr className="border-b bg-muted/30 dark:bg-gray-700 dark:border-gray-600">
+                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground dark:text-gray-200">Nama</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground dark:text-gray-200">Email</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground dark:text-gray-200">Role</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground dark:text-gray-200">Tanggal Bergabung</th>
+                    <th className="px-6 py-4 text-right text-sm font-medium text-muted-foreground dark:text-gray-200">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                   {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-muted/20 transition-colors">
+                    <tr key={user.id} className="hover:bg-muted/20 transition-colors dark:hover:bg-gray-700">
                       <td className="px-6 py-4">
-                        <div className="font-medium">{user.name}</div>
+                        <div className="font-medium dark:text-white">{user.name}</div>
                       </td>
-                      <td className="px-6 py-4 text-muted-foreground">{user.email}</td>
+                      <td className="px-6 py-4 text-muted-foreground dark:text-gray-300">{user.email}</td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           user.role === 'admin' 
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                            : 'bg-green-50 text-green-700 border border-green-200'
+                            ? 'dark:bg-blue-900 dark:text-blue-200 dark:border-blue-800 bg-blue-50 text-blue-700 border border-blue-200' 
+                            : 'dark:bg-green-900 dark:text-green-200 dark:border-green-800 bg-green-50 text-green-700 border border-green-200'
                         }`}>
                           {user.role === 'admin' ? 'Admin' : 'User'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-muted-foreground">{user.createdAt}</td>
+                      <td className="px-6 py-4 text-muted-foreground dark:text-gray-300">{user.createdAt}</td>
                       <td className="px-6 py-4 text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <Edit className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="dark:hover:bg-gray-700">
+                              <Edit className="h-4 w-4 dark:text-gray-300" />
                               <span className="sr-only">Edit</span>
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => openRoleDialog(user)}>
+                          <DropdownMenuContent align="end" className="dark:bg-gray-800 dark:border-gray-700">
+                            <DropdownMenuItem onClick={() => openRoleDialog(user)} className="dark:text-gray-200 dark:focus:bg-gray-700">
                               Ubah Role
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -180,33 +178,33 @@ export default function UsersMain() {
       
       {/* Dialog untuk mengubah role */}
       <Dialog open={isRoleDialogOpen} onOpenChange={setIsRoleDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md dark:bg-gray-800">
           <DialogHeader>
-            <DialogTitle>Ubah Role Pengguna</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="dark:text-white">Ubah Role Pengguna</DialogTitle>
+            <DialogDescription className="dark:text-gray-400">
               Ubah role untuk pengguna {selectedUser?.name}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center justify-between">
-              <span className="font-medium">User</span>
+              <span className="font-medium dark:text-white">User</span>
               <Button
                 variant={selectedUser?.role === 'user' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => selectedUser && handleRoleChange(selectedUser, 'user')}
-                className="w-24"
+                className="w-24 dark:border-gray-600 dark:text-gray-200"
               >
                 {selectedUser?.role === 'user' && <Check className="h-4 w-4 mr-2" />}
                 Pilih
               </Button>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-medium">Admin</span>
+              <span className="font-medium dark:text-white">Admin</span>
               <Button
                 variant={selectedUser?.role === 'admin' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => selectedUser && handleRoleChange(selectedUser, 'admin')}
-                className="w-24"
+                className="w-24 dark:border-gray-600 dark:text-gray-200"
               >
                 {selectedUser?.role === 'admin' && <Check className="h-4 w-4 mr-2" />}
                 Pilih
@@ -214,7 +212,7 @@ export default function UsersMain() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsRoleDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setIsRoleDialogOpen(false)} className="dark:border-gray-600 dark:text-gray-200">
               <X className="h-4 w-4 mr-2" />
               Batal
             </Button>

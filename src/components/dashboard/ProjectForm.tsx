@@ -371,7 +371,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         </div>
 
         <div className="space-y-2">
-          <Label>Code Editor</Label>
+          <Label>Description</Label>
           <div className="border rounded-md p-1">
             <div className="flex items-center gap-1 border-b p-1 mb-1">
               <Button 
