@@ -12,7 +12,7 @@ import StarterKit from '@tiptap/starter-kit';
 import CodeBlock from '@tiptap/extension-code-block';
 import Highlight from '@tiptap/extension-highlight';
 import toast from 'react-hot-toast';
-import { Upload, X, Bold, Italic, Code, List, ListOrdered, Heading1, Heading2 } from 'lucide-react';
+import { Upload, X, Bold, Italic, Code, List, ListOrdered, Heading1, Heading2, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 const CATEGORIES = [
@@ -51,8 +51,13 @@ type ProjectFormProps = {
 export default function ProjectForm({ onSuccess, projectId, initialData }: ProjectFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialData?.categories || []);
-  const [imagePreview, setImagePreview] = useState<string | null>(initialData?.imageUrl || null);
+  // Mengubah state imagePreview menjadi array untuk mendukung multiple images
+  const [imagePreviews, setImagePreviews] = useState<Array<{id: string, url: string, file: File | null}>>(
+    initialData?.imageUrl ? [{ id: crypto.randomUUID(), url: initialData.imageUrl, file: null }] : []
+  );
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropZoneRef = useRef<HTMLDivElement>(null);
   
   // Tiptap Editor setup
   const editor = useEditor({
@@ -94,40 +99,99 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
     mode: 'onChange',
   });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const processFile = (file: File) => {
     // Check file size (20MB limit)
     if (file.size > 20 * 1024 * 1024) {
       toast.error('Image size exceeds 20MB limit');
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-      return;
+      return false;
     }
     
     // Check file type
     if (!file.type.startsWith('image/')) {
       toast.error('Only image files are allowed');
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-      return;
+      return false;
     }
 
     // Create preview
     const reader = new FileReader();
+    const imageId = crypto.randomUUID();
+    
     reader.onload = (e) => {
-      setImagePreview(e.target?.result as string);
+      setImagePreviews(prev => [...prev, {
+        id: imageId,
+        url: e.target?.result as string,
+        file: file
+      }]);
     };
     reader.readAsDataURL(file);
+    return true;
   };
 
-  const removeImage = () => {
-    setImagePreview(null);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    
+    // Process each file
+    let successCount = 0;
+    Array.from(files).forEach(file => {
+      if (processFile(file)) {
+        successCount++;
+      }
+    });
+    
+    if (successCount > 0) {
+      toast.success(`${successCount} image(s) added successfully`);
+    }
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragging) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      // Process each dropped file
+      let successCount = 0;
+      Array.from(files).forEach(file => {
+        if (processFile(file)) {
+          successCount++;
+        }
+      });
+      
+      if (successCount > 0) {
+        toast.success(`${successCount} image(s) added successfully`);
+      }
+    }
+  };
+
+  const removeImage = (id: string) => {
+    setImagePreviews(prev => prev.filter(img => img.id !== id));
+  };
+  
+  const handleClickUpload = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.click();
     }
   };
 
@@ -158,32 +222,47 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         data.code = JSON.stringify(json);
       }
       
-      // Handle image upload
-      let imageUrl = initialData?.imageUrl || null;
+      // Handle multiple image uploads
+      let imageUrls: string[] = [];
       
-      // If we have a new image file to upload
-      if (imagePreview && fileInputRef.current?.files?.length && 
-          (!initialData?.imageUrl || imagePreview !== initialData.imageUrl)) {
-        
-        const toastId = toast.loading('Uploading image to Cloudinary...');
-        
-        const formData = new FormData();
-        formData.append('file', fileInputRef.current.files[0]);
+      // If we have new images to upload
+      if (imagePreviews.length > 0) {
+        const toastId = toast.loading('Uploading images to Cloudinary...');
         
         try {
-          const uploadResponse = await fetch('/api/upload', {
-            method: 'POST',
-            body: formData,
-          });
+          // Upload each image that has a file (new uploads)
+          const uploadPromises = imagePreviews
+            .filter(img => img.file) // Only upload new files
+            .map(async (img) => {
+              const formData = new FormData();
+              formData.append('file', img.file as File);
+              
+              const uploadResponse = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+              });
+              
+              if (!uploadResponse.ok) {
+                const errorData = await uploadResponse.json();
+                throw new Error(errorData.error || 'Failed to upload image');
+              }
+              
+              const uploadResult = await uploadResponse.json();
+              return uploadResult.fileUrl;
+            });
           
-          if (!uploadResponse.ok) {
-            const errorData = await uploadResponse.json();
-            throw new Error(errorData.error || 'Failed to upload image');
-          }
+          // Wait for all uploads to complete
+          const newImageUrls = await Promise.all(uploadPromises);
           
-          const uploadResult = await uploadResponse.json();
-          imageUrl = uploadResult.fileUrl;
-          toast.success('Image uploaded successfully', { id: toastId });
+          // Add existing image URLs (from initialData that weren't changed)
+          const existingImageUrls = imagePreviews
+            .filter(img => !img.file) // Images without file are from initialData
+            .map(img => img.url);
+          
+          // Combine all image URLs
+          imageUrls = [...newImageUrls, ...existingImageUrls];
+          
+          toast.success(`${newImageUrls.length} image(s) uploaded successfully`, { id: toastId });
         } catch (uploadError: any) {
           console.error('Image upload error:', uploadError);
           toast.error(`Image upload failed: ${uploadError.message}`, { id: toastId });
@@ -198,7 +277,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         description: data.description,
         categories: selectedCategories,
         code: data.code,
-        imageUrl,
+        imageUrls: imageUrls.length > 0 ? imageUrls : null,
       };
       
       // Create or update project
@@ -226,7 +305,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         form.reset();
         setSelectedCategories([]);
         editor?.commands.clearContent();
-        setImagePreview(null);
+        setImagePreviews([]);
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
@@ -368,30 +447,80 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
         <div className="space-y-2">
           <Label>Project Image</Label>
-          <div className="flex items-center gap-4">
-            <Input
+          <div 
+            ref={dropZoneRef}
+            className={`border-2 border-dashed rounded-md p-6 transition-all ${
+              isDragging ? 'border-primary bg-primary/5' : 'border-border'
+            } ${imagePreviews.length > 0 ? 'pb-2' : 'flex flex-col items-center justify-center min-h-[200px]'}`}
+            onDragEnter={handleDragEnter}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
               ref={fileInputRef}
               type="file"
               accept="image/*"
               onChange={handleImageChange}
+              className="hidden"
+              multiple
             />
-            {imagePreview && (
-              <Button type="button" variant="destructive" size="icon" onClick={removeImage}>
-                <X className="h-4 w-4" />
-              </Button>
+            
+            {imagePreviews.length === 0 ? (
+              <>
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="mb-4 rounded-full bg-primary/10 p-4">
+                    <ImageIcon className="h-8 w-8 text-primary" />
+                  </div>
+                  <p className="mb-2 text-sm font-medium">Click to upload or drag and drop</p>
+                  <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={handleClickUpload}
+                  >
+                    Select Files
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {imagePreviews.map((image) => (
+                    <div key={image.id} className="relative group">
+                      <div className="absolute -right-2 -top-2 z-10">
+                        <Button 
+                          type="button" 
+                          variant="destructive" 
+                          size="icon" 
+                          onClick={() => removeImage(image.id)} 
+                          className="h-6 w-6 rounded-full opacity-80 group-hover:opacity-100"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      <div className="border rounded-md overflow-hidden">
+                        <Image
+                          src={image.url}
+                          alt="Preview"
+                          className="w-full h-auto aspect-square object-cover"
+                          width={150}
+                          height={150}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <div 
+                    className="border-2 border-dashed rounded-md flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors aspect-square"
+                    onClick={handleClickUpload}
+                  >
+                    <Upload className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-          {imagePreview && (
-            <div className="mt-2">
-              <Image
-                src={imagePreview}
-                alt="Preview"
-                className="max-w-[200px] rounded-lg"
-                width={200}
-                height={200}
-              />
-            </div>
-          )}
         </div>
 
         <div className="flex justify-end gap-4">
@@ -402,7 +531,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               form.reset();
               setSelectedCategories([]);
               editor?.commands.clearContent();
-              setImagePreview(null);
+              setImagePreviews([]);
             }}
           >
             Cancel
