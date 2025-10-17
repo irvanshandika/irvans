@@ -67,6 +67,7 @@ const Projects = () => {
                 >
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
+                    {project.imageUrl ? (
                     <Image
                       src={project.imageUrl || ''}
                       alt={project.title}
@@ -74,6 +75,11 @@ const Projects = () => {
                       height={200}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />
+                    ) : (
+                      <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                        <span className="text-gray-400">No Image</span>
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
                   </div>
 
@@ -88,7 +94,7 @@ const Projects = () => {
 
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.map(tech => (
+                      {project.technologies && project.technologies.map(tech => (
                         <Badge
                           key={tech}
                           variant="secondary"
