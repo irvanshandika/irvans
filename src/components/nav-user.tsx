@@ -4,13 +4,9 @@ import {
   IconLogout,
   IconNotification,
   IconUserCircle,
-} from "@tabler/icons-react"
+} from '@tabler/icons-react';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,31 +15,31 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu"
+} from '@/src/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   useSidebar,
-} from "@/src/components/ui/sidebar"
-import { useSession, signOut } from "next-auth/react"
-import toast from "react-hot-toast"
+} from '@/src/components/ui/sidebar';
+import { useSession, signOut } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 interface User {
-  name?: string
-  email?: string
-  image?: string
-  id?: string
+  name?: string;
+  email?: string;
+  image?: string;
+  id?: string;
 }
 
 interface NavUserProps {
-  user?: User
+  user?: User;
 }
 
 export function NavUser({ user: propUser }: NavUserProps) {
-  const { isMobile } = useSidebar()
-  const { data: session } = useSession()
-  const user = session?.user || propUser
+  const { isMobile } = useSidebar();
+  const { data: session } = useSession();
+  const user = session?.user || propUser;
 
   // Jika tidak ada data pengguna, tampilkan tombol login
   if (!user) {
@@ -57,13 +53,15 @@ export function NavUser({ user: propUser }: NavUserProps) {
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">Login</span>
-                <span className="text-muted-foreground truncate text-xs">Sign in to your account</span>
+                <span className="text-muted-foreground truncate text-xs">
+                  Sign in to your account
+                </span>
               </div>
             </a>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
-    )
+    );
   }
 
   return (
@@ -81,16 +79,14 @@ export function NavUser({ user: propUser }: NavUserProps) {
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user?.name}</span>
-                <span className="text-muted-foreground truncate text-xs">
-                  {user?.email}
-                </span>
+                <span className="text-muted-foreground truncate text-xs">{user?.email}</span>
               </div>
               <IconDotsVertical className="ml-auto h-4 w-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? 'bottom' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -102,9 +98,7 @@ export function NavUser({ user: propUser }: NavUserProps) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
-                  <span className="text-muted-foreground truncate text-xs">
-                    {user?.email}
-                  </span>
+                  <span className="text-muted-foreground truncate text-xs">{user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -124,10 +118,12 @@ export function NavUser({ user: propUser }: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => {
-              toast.success(`See You Again, ${user?.name}!`)
-              signOut({ callbackUrl: "/" })
-            }}>
+            <DropdownMenuItem
+              onClick={() => {
+                toast.success(`See You Again, ${user?.name}!`);
+                signOut({ callbackUrl: '/' });
+              }}
+            >
               <IconLogout className="mr-2" />
               Log out
             </DropdownMenuItem>
@@ -135,5 +131,5 @@ export function NavUser({ user: propUser }: NavUserProps) {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

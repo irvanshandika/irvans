@@ -1,4 +1,4 @@
-"use server";
+'use server';
 
 /**
  * Verifikasi token reCAPTCHA dengan Google reCAPTCHA API
@@ -11,7 +11,7 @@ export async function verifyReCaptcha(token: string) {
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
 
     if (!secretKey) {
-      console.error("RECAPTCHA_SECRET_KEY tidak ditemukan di environment variables");
+      console.error('RECAPTCHA_SECRET_KEY tidak ditemukan di environment variables');
       return { success: false, score: 0 };
     }
 
@@ -19,9 +19,9 @@ export async function verifyReCaptcha(token: string) {
     const response = await fetch(
       `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
       }
     );
@@ -34,11 +34,11 @@ export async function verifyReCaptcha(token: string) {
       // Semakin tinggi skor, semakin besar kemungkinan interaksi dilakukan oleh manusia
       return { success: true, score: data.score };
     } else {
-      console.error("reCAPTCHA verification failed:", data["error-codes"]);
+      console.error('reCAPTCHA verification failed:', data['error-codes']);
       return { success: false, score: 0 };
     }
   } catch (error) {
-    console.error("Error verifying reCAPTCHA:", error);
+    console.error('Error verifying reCAPTCHA:', error);
     return { success: false, score: 0 };
   }
 }

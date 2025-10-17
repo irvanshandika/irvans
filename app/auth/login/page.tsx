@@ -1,54 +1,54 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
-import { AuthForm } from "@/src/components/auth/AuthForm";
-import { loginSchema, LoginFormValues } from "@/src/lib/validations";
+import { AuthForm } from '@/src/components/auth/AuthForm';
+import { loginSchema, LoginFormValues } from '@/src/lib/validations';
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (values: LoginFormValues) => {
-    const loadingToast = toast.loading("Sedang login...");
+    const loadingToast = toast.loading('Sedang login...');
 
     try {
-      const result = await signIn("credentials", {
+      const result = await signIn('credentials', {
         email: values.email,
         password: values.password,
         redirect: false,
-        callbackUrl: "/"
+        callbackUrl: '/',
       });
 
       if (!result || result.error) {
         toast.dismiss(loadingToast);
-        toast.error("Email atau password salah", {
+        toast.error('Email atau password salah', {
           duration: 3000,
         });
-        setError("Email atau password salah");
+        setError('Email atau password salah');
         return;
       }
 
       toast.dismiss(loadingToast);
-      toast.success("Login berhasil!", {
+      toast.success('Login berhasil!', {
         duration: 3000,
       });
 
       // Add delay before redirect
       setTimeout(() => {
-        router.push(result.url || "/");
+        router.push(result.url || '/');
         router.refresh();
       }, 1000);
     } catch (error) {
       toast.dismiss(loadingToast);
-      toast.error("Terjadi kesalahan saat login", {
+      toast.error('Terjadi kesalahan saat login', {
         duration: 3000,
       });
-      setError("Terjadi kesalahan saat login");
+      setError('Terjadi kesalahan saat login');
     }
   };
 
@@ -60,8 +60,8 @@ export default function LoginPage() {
           schema={loginSchema}
           onSubmit={handleSubmit}
           formFields={[
-            { name: "email", label: "Email", type: "email" },
-            { name: "password", label: "Password", type: "password" },
+            { name: 'email', label: 'Email', type: 'email' },
+            { name: 'password', label: 'Password', type: 'password' },
           ]}
           title="Login"
           description="Masukkan email dan password untuk login ke akun Anda"
@@ -71,9 +71,7 @@ export default function LoginPage() {
           footerLinkHref="/auth/register"
         />
         {error && (
-          <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-md text-sm">
-            {error}
-          </div>
+          <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-md text-sm">{error}</div>
         )}
       </div>
     </div>

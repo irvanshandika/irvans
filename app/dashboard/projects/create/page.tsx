@@ -21,16 +21,16 @@ export default function CreateProjectPage() {
               <h1 className="text-3xl font-bold tracking-tight">Create New Project</h1>
             </div>
           </div>
-          
+
           <Toaster position="top-right" />
-          
+
           <div className="max-w-3xl">
             <div className="bg-card dark:bg-card/80 rounded-xl border shadow-sm p-6 transition-colors duration-200">
-              <ProjectForm 
+              <ProjectForm
                 onSuccess={() => {
                   // Redirect to projects page after successful creation
                   window.location.href = '/dashboard/projects';
-                }} 
+                }}
               />
             </div>
           </div>

@@ -1,21 +1,23 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ThemeProvider } from "@/src/components/theme-provider";
-import { AuthProvider } from "@/src/components/auth/AuthProvider";
-import { ReCaptchaProvider } from "@/src/components/auth/ReCaptchaProvider";
-import {Toaster} from 'react-hot-toast'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import type { Metadata } from 'next';
+import './globals.css';
+import { ThemeProvider } from '@/src/components/theme-provider';
+import { AuthProvider } from '@/src/components/auth/AuthProvider';
+import { ReCaptchaProvider } from '@/src/components/auth/ReCaptchaProvider';
+import { Toaster } from 'react-hot-toast';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
-  title: "Irvans | Full Stack Developer Portfolio",
-  description: "Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks. View my projects and skills.",
+  title: 'Irvans | Full Stack Developer Portfolio',
+  description:
+    'Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks. View my projects and skills.',
   metadataBase: new URL('https://irvans.my.id'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Irvans | Full Stack Developer Portfolio',
-    description: 'Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks.',
+    description:
+      'Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks.',
     url: 'https://irvans.my.id',
     siteName: 'Irvans Portfolio',
     locale: 'en_US',
@@ -24,7 +26,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Irvans | Full Stack Developer Portfolio',
-    description: 'Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks.',
+    description:
+      'Professional portfolio of Irvans - Experienced Full Stack Developer specializing in web development, React, TypeScript, and modern tech stacks.',
   },
   robots: {
     index: true,
@@ -53,7 +56,7 @@ export default function RootLayout({
         <link rel="canonical" href="https://irvans.my.id" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="antialiased">
+      <body className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 light:bg-gradient-to-br light:from-gray-50 light:via-white light:to-gray-100">
         <AuthProvider>
           <ReCaptchaProvider>
             <GoogleAnalytics gaId="G-QWFK1HLP35" />

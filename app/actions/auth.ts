@@ -1,11 +1,11 @@
-"use server";
+'use server';
 
-import { PrismaClient } from "@prisma/client";
-import { hash } from "bcrypt";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { RegisterFormData } from "@/src/lib/auth";
-import { verifyReCaptcha } from "./recaptcha";
+import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcrypt';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { RegisterFormData } from '@/src/lib/auth';
+import { verifyReCaptcha } from './recaptcha';
 
 const prisma = new PrismaClient();
 
@@ -14,21 +14,21 @@ export async function registerUser(data: RegisterFormData) {
     // Verifikasi reCAPTCHA jika token tersedia
     if (data.recaptchaToken) {
       const recaptchaResult = await verifyReCaptcha(data.recaptchaToken);
-      
+
       // Tentukan ambang batas skor reCAPTCHA (0.5 adalah nilai umum)
       const RECAPTCHA_SCORE_THRESHOLD = 0.5;
-      
+
       if (!recaptchaResult.success || recaptchaResult.score < RECAPTCHA_SCORE_THRESHOLD) {
-        return { 
-          success: false, 
-          message: "Verifikasi keamanan gagal. Silakan coba lagi." 
+        return {
+          success: false,
+          message: 'Verifikasi keamanan gagal. Silakan coba lagi.',
         };
       }
     } else {
       // Jika tidak ada token reCAPTCHA, tolak pendaftaran
-      return { 
-        success: false, 
-        message: "Verifikasi keamanan diperlukan. Silakan coba lagi." 
+      return {
+        success: false,
+        message: 'Verifikasi keamanan diperlukan. Silakan coba lagi.',
       };
     }
 
@@ -40,7 +40,7 @@ export async function registerUser(data: RegisterFormData) {
     });
 
     if (existingUser) {
-      return { success: false, message: "Email sudah terdaftar" };
+      return { success: false, message: 'Email sudah terdaftar' };
     }
 
     // Hash password
@@ -54,10 +54,10 @@ export async function registerUser(data: RegisterFormData) {
         password: hashedPassword,
         accounts: {
           create: {
-            type: "credentials",
-            provider: "credentials",
+            type: 'credentials',
+            provider: 'credentials',
             providerAccountId: data.email,
-            role: "user", // Set default role sebagai "user"
+            role: 'user', // Set default role sebagai "user"
           },
         },
       },
@@ -65,18 +65,18 @@ export async function registerUser(data: RegisterFormData) {
 
     return { success: true, user: { id: newUser.id, name: newUser.name, email: newUser.email } };
   } catch (error) {
-    console.error("Error registering user:", error);
-    return { success: false, message: "Terjadi kesalahan saat mendaftar" };
+    console.error('Error registering user:', error);
+    return { success: false, message: 'Terjadi kesalahan saat mendaftar' };
   }
 }
 
 export async function registerAction(formData: FormData) {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
 
   if (!name || !email || !password) {
-    return { error: "Semua field harus diisi" };
+    return { error: 'Semua field harus diisi' };
   }
 
   try {
@@ -88,7 +88,7 @@ export async function registerAction(formData: FormData) {
     });
 
     if (existingUser) {
-      return { error: "Email sudah terdaftar" };
+      return { error: 'Email sudah terdaftar' };
     }
 
     // Hash password
@@ -102,19 +102,19 @@ export async function registerAction(formData: FormData) {
         password: hashedPassword,
         accounts: {
           create: {
-            type: "credentials",
-            provider: "credentials",
+            type: 'credentials',
+            provider: 'credentials',
             providerAccountId: email,
-            role: "user", // Set default role sebagai "user"
+            role: 'user', // Set default role sebagai "user"
           },
         },
       },
     });
 
-    revalidatePath("/auth/login");
-    redirect("/auth/login?registered=true");
+    revalidatePath('/auth/login');
+    redirect('/auth/login?registered=true');
   } catch (error) {
-    console.error("Error registering user:", error);
-    return { error: "Terjadi kesalahan saat mendaftar" };
+    console.error('Error registering user:', error);
+    return { error: 'Terjadi kesalahan saat mendaftar' };
   }
 }

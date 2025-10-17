@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { useState } from "react";
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useState } from 'react';
 
 interface UseReCaptchaReturn {
   executeReCaptcha: () => Promise<string | null>;
@@ -20,14 +20,14 @@ export function useReCaptcha(): UseReCaptchaReturn {
 
     try {
       if (!executeRecaptcha) {
-        throw new Error("reCAPTCHA belum siap");
+        throw new Error('reCAPTCHA belum siap');
       }
 
       // Eksekusi reCAPTCHA dengan action 'register'
-      const token = await executeRecaptcha("register");
+      const token = await executeRecaptcha('register');
       return token;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Gagal memverifikasi reCAPTCHA";
+      const errorMessage = err instanceof Error ? err.message : 'Gagal memverifikasi reCAPTCHA';
       setError(errorMessage);
       return null;
     } finally {

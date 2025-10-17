@@ -1,31 +1,31 @@
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
+import { IconCirclePlusFilled, IconMail, type Icon } from '@tabler/icons-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-import { Button } from "@/src/components/ui/button"
+import { Button } from '@/src/components/ui/button';
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/src/components/ui/sidebar"
+} from '@/src/components/ui/sidebar';
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon?: Icon
+    title: string;
+    url: string;
+    icon?: Icon;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+    }[];
+  }[];
 }) {
-  const pathname = usePathname()
-  
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -49,28 +49,27 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => {
-            const isActive = 
-              pathname === item.url || 
-              (item.url !== "/dashboard" && pathname.startsWith(item.url))
-            
+          {items.map(item => {
+            const isActive =
+              pathname === item.url || (item.url !== '/dashboard' && pathname.startsWith(item.url));
+
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton 
-                  asChild 
+                <SidebarMenuButton
+                  asChild
                   tooltip={item.title}
-                  className={isActive ? "bg-muted" : ""}
+                  className={isActive ? 'bg-muted' : ''}
                 >
                   <Link href={item.url}>
-                    {item.icon && <item.icon className={isActive ? "text-primary" : ""} />}
-                    <span className={isActive ? "font-medium text-primary" : ""}>{item.title}</span>
+                    {item.icon && <item.icon className={isActive ? 'text-primary' : ''} />}
+                    <span className={isActive ? 'font-medium text-primary' : ''}>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { AuthForm } from "@/src/components/auth/AuthForm";
-import { registerSchema, RegisterFormValues } from "@/src/lib/validations";
-import { registerUser } from "@/app/actions/auth";
-import { useReCaptcha } from "@/src/hooks/useReCaptcha";
+import { AuthForm } from '@/src/components/auth/AuthForm';
+import { registerSchema, RegisterFormValues } from '@/src/lib/validations';
+import { registerUser } from '@/app/actions/auth';
+import { useReCaptcha } from '@/src/hooks/useReCaptcha';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -18,9 +18,9 @@ export default function RegisterPage() {
     try {
       // Eksekusi reCAPTCHA untuk mendapatkan token
       const recaptchaToken = await executeReCaptcha();
-      
+
       if (!recaptchaToken) {
-        setError(recaptchaError || "Verifikasi keamanan gagal. Silakan coba lagi.");
+        setError(recaptchaError || 'Verifikasi keamanan gagal. Silakan coba lagi.');
         return;
       }
 
@@ -32,14 +32,14 @@ export default function RegisterPage() {
       });
 
       if (!success) {
-        setError(message || "Terjadi kesalahan saat mendaftar");
+        setError(message || 'Terjadi kesalahan saat mendaftar');
         return;
       }
 
       // Redirect ke halaman login setelah berhasil mendaftar
-      router.push("/auth/login?registered=true");
+      router.push('/auth/login?registered=true');
     } catch (error) {
-      setError("Terjadi kesalahan saat mendaftar");
+      setError('Terjadi kesalahan saat mendaftar');
     }
   };
 
@@ -51,13 +51,13 @@ export default function RegisterPage() {
           schema={registerSchema}
           onSubmit={handleSubmit}
           formFields={[
-            { name: "name", label: "Nama", type: "text" },
-            { name: "email", label: "Email", type: "email" },
-            { name: "password", label: "Password", type: "password" },
+            { name: 'name', label: 'Nama', type: 'text' },
+            { name: 'email', label: 'Email', type: 'email' },
+            { name: 'password', label: 'Password', type: 'password' },
             {
-              name: "confirmPassword",
-              label: "Konfirmasi Password",
-              type: "password",
+              name: 'confirmPassword',
+              label: 'Konfirmasi Password',
+              type: 'password',
             },
           ]}
           title="Register"
@@ -68,9 +68,7 @@ export default function RegisterPage() {
           footerLinkHref="/auth/login"
         />
         {error && (
-          <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-md text-sm">
-            {error}
-          </div>
+          <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-md text-sm">{error}</div>
         )}
       </div>
     </div>

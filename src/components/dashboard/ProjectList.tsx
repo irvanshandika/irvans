@@ -26,11 +26,11 @@ export default function ProjectList() {
     try {
       setLoading(true);
       const response = await fetch('/api/projects');
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch projects');
       }
-      
+
       const data = await response.json();
       setProjects(data);
       setError(null);
@@ -51,16 +51,16 @@ export default function ProjectList() {
     if (!confirm('Are you sure you want to delete this project?')) {
       return;
     }
-    
+
     try {
       const response = await fetch(`/api/projects/${id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to delete project');
       }
-      
+
       toast.success('Project deleted successfully');
       fetchProjects(); // Refresh the list
     } catch (err) {
@@ -104,7 +104,9 @@ export default function ProjectList() {
     return (
       <div className="text-center p-8 border border-dashed rounded-lg">
         <p className="text-muted-foreground mb-4">No projects found</p>
-        <p className="text-sm text-muted-foreground">Create your first project by clicking the &ldquo;Create Project&rdquo; tab above.</p>
+        <p className="text-sm text-muted-foreground">
+          Create your first project by clicking the &ldquo;Create Project&rdquo; tab above.
+        </p>
       </div>
     );
   }
@@ -113,9 +115,9 @@ export default function ProjectList() {
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-medium">Total Projects: {projects.length}</h2>
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           className="flex items-center gap-1"
           onClick={() => fetchProjects()}
         >
@@ -124,8 +126,11 @@ export default function ProjectList() {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        {projects.map((project) => (
-          <div key={project.id} className="group p-5 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 hover:border-primary/30">
+        {projects.map(project => (
+          <div
+            key={project.id}
+            className="group p-5 border rounded-xl bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 hover:border-primary/30"
+          >
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full md:w-1/4 md:max-w-[200px]">
                 {project.imageUrl ? (
@@ -145,18 +150,22 @@ export default function ProjectList() {
               <div className="flex-1">
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
                   <div>
-                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{project.title}</h3>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
                     <div className="flex flex-wrap gap-1.5 mt-2">
-                      {project.categories.map((category) => (
-                        <span 
-                          key={category} 
+                      {project.categories.map(category => (
+                        <span
+                          key={category}
                           className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
                         >
                           {category}
                         </span>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{project.description}</p>
+                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
+                      {project.description}
+                    </p>
                   </div>
                   <div className="flex flex-col items-start sm:items-end">
                     <div className="flex">{renderStars(project.rating)}</div>
@@ -171,18 +180,20 @@ export default function ProjectList() {
                   </div>
                 </div>
                 <div className="flex justify-end gap-3 mt-5">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="flex items-center gap-1.5 hover:bg-primary/10 transition-colors"
-                    onClick={() => window.location.href = `/dashboard/projects/edit/${project.id}`}
+                    onClick={() =>
+                      (window.location.href = `/dashboard/projects/edit/${project.id}`)
+                    }
                   >
                     <Edit size={14} />
                     Edit
                   </Button>
-                  <Button 
-                    variant="destructive" 
-                    size="sm" 
+                  <Button
+                    variant="destructive"
+                    size="sm"
                     className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity"
                     onClick={() => handleDelete(project.id)}
                   >

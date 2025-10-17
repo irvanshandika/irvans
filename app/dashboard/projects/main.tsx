@@ -23,9 +23,9 @@ export default function ProjectsMain() {
               </Link>
             </Button>
           </div>
-          
+
           <Toaster position="top-right" />
-          
+
           <div className="w-full">
             <div className="bg-card dark:bg-card/80 rounded-xl border shadow-sm p-6 transition-colors duration-200">
               <div className="flex items-center gap-2 mb-6">

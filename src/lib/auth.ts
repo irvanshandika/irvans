@@ -1,7 +1,7 @@
 'use server';
 
-import { hash } from "bcrypt";
-import { PrismaClient } from "@prisma/client";
+import { hash } from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +27,7 @@ export async function registerUser(data: RegisterFormData) {
     });
 
     if (existingUser) {
-      return { success: false, message: "Email sudah terdaftar" };
+      return { success: false, message: 'Email sudah terdaftar' };
     }
 
     // Hash password
@@ -41,10 +41,10 @@ export async function registerUser(data: RegisterFormData) {
         password: hashedPassword,
         accounts: {
           create: {
-            type: "credentials",
-            provider: "credentials",
+            type: 'credentials',
+            provider: 'credentials',
             providerAccountId: data.email,
-            role: "user", // Set default role sebagai "user"
+            role: 'user', // Set default role sebagai "user"
           },
         },
       },
@@ -52,8 +52,8 @@ export async function registerUser(data: RegisterFormData) {
 
     return { success: true, user: { id: newUser.id, name: newUser.name, email: newUser.email } };
   } catch (error) {
-    console.error("Error registering user:", error);
-    return { success: false, message: "Terjadi kesalahan saat mendaftar" };
+    console.error('Error registering user:', error);
+    return { success: false, message: 'Terjadi kesalahan saat mendaftar' };
   }
 }
 
@@ -67,7 +67,7 @@ export async function checkUserExists(email: string) {
 
     return !!user;
   } catch (error) {
-    console.error("Error checking user existence:", error);
+    console.error('Error checking user existence:', error);
     return false;
   }
 }

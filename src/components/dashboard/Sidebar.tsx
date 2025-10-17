@@ -11,23 +11,23 @@ const navItems = [
   {
     name: 'Dashboard',
     href: '/dashboard',
-    icon: LayoutDashboard
+    icon: LayoutDashboard,
   },
   {
     name: 'Projects',
     href: '/dashboard/projects',
-    icon: FolderKanban
+    icon: FolderKanban,
   },
   {
     name: 'Management Users',
     href: '/dashboard/users',
-    icon: Users
+    icon: Users,
   },
   {
     name: 'Profile',
     href: '/dashboard/profile',
-    icon: UserCircle
-  }
+    icon: UserCircle,
+  },
 ];
 
 export default function Sidebar() {
@@ -42,12 +42,7 @@ export default function Sidebar() {
     <>
       {/* Mobile menu button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={toggleSidebar}
-          aria-label="Toggle menu"
-        >
+        <Button variant="outline" size="icon" onClick={toggleSidebar} aria-label="Toggle menu">
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
@@ -66,7 +61,7 @@ export default function Sidebar() {
           </div>
           <div className="flex-1 py-4 overflow-y-auto">
             <ul className="space-y-2 px-2">
-              {navItems.map((item) => (
+              {navItems.map(item => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
@@ -95,7 +90,7 @@ export default function Sidebar() {
         </div>
         <nav className="flex-1 py-4 overflow-y-auto">
           <ul className="space-y-2 px-2">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <li key={item.name}>
                 <Link
                   href={item.href}

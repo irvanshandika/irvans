@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from '@/src/components/ui/button';
 import {
   Form,
   FormControl,
@@ -17,12 +17,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
+} from '@/src/components/ui/form';
+import { Input } from '@/src/components/ui/input';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/src/components/ui/card';
 
 interface AuthFormProps {
-  type: "login" | "register";
+  type: 'login' | 'register';
   schema: z.ZodType<any, any>;
   onSubmit: (values: any) => Promise<void>;
   formFields: {
@@ -56,10 +63,13 @@ export function AuthForm({
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: formFields.reduce((acc, field) => {
-      acc[field.name] = "";
-      return acc;
-    }, {} as Record<string, string>),
+    defaultValues: formFields.reduce(
+      (acc, field) => {
+        acc[field.name] = '';
+        return acc;
+      },
+      {} as Record<string, string>
+    ),
   });
 
   const handleSubmit = async (values: z.infer<typeof schema>) => {
@@ -69,7 +79,7 @@ export function AuthForm({
     try {
       await onSubmit(values);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Terjadi kesalahan");
+      setError(error instanceof Error ? error.message : 'Terjadi kesalahan');
     } finally {
       setIsLoading(false);
     }
@@ -81,13 +91,13 @@ export function AuthForm({
 
     try {
       // Gunakan redirect: true untuk menghindari masalah dengan popup
-      await signIn("google", {
-        callbackUrl: "/",
-        redirect: true
+      await signIn('google', {
+        callbackUrl: '/',
+        redirect: true,
       });
       // Tidak perlu menangani redirect di sini karena redirect: true
     } catch (error) {
-      setError("Terjadi kesalahan saat login dengan Google");
+      setError('Terjadi kesalahan saat login dengan Google');
       setIsLoading(false);
     }
   };
@@ -101,7 +111,7 @@ export function AuthForm({
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            {formFields.map((field) => (
+            {formFields.map(field => (
               <FormField
                 key={field.name}
                 control={form.control}
@@ -110,11 +120,7 @@ export function AuthForm({
                   <FormItem>
                     <FormLabel>{field.label}</FormLabel>
                     <FormControl>
-                      <Input
-                        {...formField}
-                        type={field.type}
-                        disabled={isLoading}
-                      />
+                      <Input {...formField} type={field.type} disabled={isLoading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -122,12 +128,10 @@ export function AuthForm({
               />
             ))}
 
-            {error && (
-              <div className="text-sm font-medium text-red-500">{error}</div>
-            )}
+            {error && <div className="text-sm font-medium text-red-500">{error}</div>}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Loading..." : submitText}
+              {isLoading ? 'Loading...' : submitText}
             </Button>
           </form>
         </Form>
@@ -150,11 +154,7 @@ export function AuthForm({
           onClick={handleGoogleSignIn}
           disabled={isLoading}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="w-5 h-5 mr-2"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 mr-2">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"
@@ -177,11 +177,8 @@ export function AuthForm({
       </CardContent>
       <CardFooter className="flex justify-center">
         <div className="text-sm text-gray-600 dark:text-gray-400">
-          {footerText}{" "}
-          <a
-            href={footerLinkHref}
-            className="text-blue-600 hover:underline dark:text-blue-400"
-          >
+          {footerText}{' '}
+          <a href={footerLinkHref} className="text-blue-600 hover:underline dark:text-blue-400">
             {footerLinkText}
           </a>
         </div>

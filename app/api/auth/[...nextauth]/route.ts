@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import { NextAuthOptions } from "next-auth";
-import { compare } from "bcrypt";
-import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
+import { NextAuthOptions } from 'next-auth';
+import { compare } from 'bcrypt';
+import NextAuth from 'next-auth/next';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
 
@@ -20,10 +20,10 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -40,10 +40,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const isPasswordValid = await compare(
-          credentials.password,
-          user.password
-        );
+        const isPasswordValid = await compare(credentials.password, user.password);
 
         if (!isPasswordValid) {
           return null;
@@ -59,18 +56,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/login",
+    signIn: '/auth/login',
+    error: '/auth/login',
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === 'development',
   callbacks: {
     async signIn({ user, account, profile }) {
       // Untuk Google OAuth
-      if (account?.provider === "google") {
+      if (account?.provider === 'google') {
         const existingUser = await prisma.user.findUnique({
           where: {
             email: user.email!,
@@ -91,10 +88,10 @@ export const authOptions: NextAuthOptions = {
               },
             });
           } catch (error) {
-            console.error("Error creating user from Google OAuth:", error);
+            console.error('Error creating user from Google OAuth:', error);
             return false;
           }
-        } 
+        }
         // Jika pengguna sudah terdaftar dengan email/password tapi belum pernah login dengan Google
         else if (existingUser && (!existingUser.accounts || existingUser.accounts.length === 0)) {
           // Hubungkan akun Google dengan akun yang sudah ada
@@ -116,7 +113,7 @@ export const authOptions: NextAuthOptions = {
             });
             return true;
           } catch (error) {
-            console.error("Error linking Google account:", error);
+            console.error('Error linking Google account:', error);
             return false;
           }
         }

@@ -26,14 +26,15 @@ export default function RestrictedPage() {
             />
           </svg>
         </div>
-        
+
         <h1 className="text-2xl font-bold text-foreground">Akses Dibatasi</h1>
-        
+
         <p className="text-muted-foreground">
-          Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. Halaman ini hanya tersedia untuk pengguna dengan role admin.
+          Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. Halaman ini hanya tersedia
+          untuk pengguna dengan role admin.
         </p>
-        
-        <Button 
+
+        <Button
           onClick={() => router.push('/')}
           className="flex items-center justify-center gap-2 w-full"
         >

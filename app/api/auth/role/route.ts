@@ -26,7 +26,10 @@ export async function GET(request: NextRequest) {
 
     // Cek apakah user memiliki akun dengan role
     if (!user.accounts || user.accounts.length === 0) {
-      return NextResponse.json({ success: false, role: 'user', message: 'No account found' }, { status: 200 });
+      return NextResponse.json(
+        { success: false, role: 'user', message: 'No account found' },
+        { status: 200 }
+      );
     }
 
     // Ambil role dari akun pertama (asumsi satu user hanya memiliki satu role)

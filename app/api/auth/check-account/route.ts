@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,10 +9,7 @@ export async function POST(request: NextRequest) {
     const { email } = body;
 
     if (!email) {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
     // Periksa apakah email sudah terdaftar
@@ -26,10 +23,7 @@ export async function POST(request: NextRequest) {
       exists: !!existingUser,
     });
   } catch (error) {
-    console.error("Error checking account:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.error('Error checking account:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

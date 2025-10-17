@@ -1,14 +1,8 @@
-"use client"
+'use client';
 
-import {
-  IconDots,
-  IconFolder,
-  IconShare3,
-  IconTrash,
-  type Icon,
-} from "@tabler/icons-react"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
+import { IconDots, IconFolder, IconShare3, IconTrash, type Icon } from '@tabler/icons-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 import {
   DropdownMenu,
@@ -16,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu"
+} from '@/src/components/ui/dropdown-menu';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -25,51 +19,58 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/src/components/ui/sidebar"
+} from '@/src/components/ui/sidebar';
 
 export function NavDocuments({
   items,
 }: {
   items: {
-    name: string
-    url: string
-    icon: Icon
-  }[]
+    name: string;
+    url: string;
+    icon: Icon;
+  }[];
 }) {
-  const { isMobile } = useSidebar()
-  const pathname = usePathname()
+  const { isMobile } = useSidebar();
+  const pathname = usePathname();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Documents</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {items.map(item => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton 
+            <SidebarMenuButton
               asChild
-              className={pathname === item.url || pathname.startsWith(item.url) ? "bg-muted" : ""}
+              className={pathname === item.url || pathname.startsWith(item.url) ? 'bg-muted' : ''}
             >
               <Link href={item.url}>
-                <item.icon className={pathname === item.url || pathname.startsWith(item.url) ? "text-primary" : ""} />
-                <span className={pathname === item.url || pathname.startsWith(item.url) ? "font-medium text-primary" : ""}>
+                <item.icon
+                  className={
+                    pathname === item.url || pathname.startsWith(item.url) ? 'text-primary' : ''
+                  }
+                />
+                <span
+                  className={
+                    pathname === item.url || pathname.startsWith(item.url)
+                      ? 'font-medium text-primary'
+                      : ''
+                  }
+                >
                   {item.name}
                 </span>
               </Link>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuAction
-                  showOnHover
-                  className="data-[state=open]:bg-accent rounded-sm"
-                >
+                <SidebarMenuAction showOnHover className="data-[state=open]:bg-accent rounded-sm">
                   <IconDots />
                   <span className="sr-only">More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-24 rounded-lg"
-                side={isMobile ? "bottom" : "right"}
-                align={isMobile ? "end" : "start"}
+                side={isMobile ? 'bottom' : 'right'}
+                align={isMobile ? 'end' : 'start'}
               >
                 <DropdownMenuItem>
                   <IconFolder />
@@ -96,5 +97,5 @@ export function NavDocuments({
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

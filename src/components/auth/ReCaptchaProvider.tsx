@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { ReactNode } from "react";
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { ReactNode } from 'react';
 
 interface ReCaptchaProviderProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface ReCaptchaProviderProps {
 export function ReCaptchaProvider({ children }: ReCaptchaProviderProps) {
   // Gunakan environment variable untuk reCAPTCHA site key
   // Pastikan untuk menambahkan NEXT_PUBLIC_RECAPTCHA_SITE_KEY di .env.local
-  const reCaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY || "";
+  const reCaptchaSiteKey = process.env.RECAPTCHA_SITE_KEY || '';
 
   return (
     <GoogleReCaptchaProvider
@@ -18,7 +18,7 @@ export function ReCaptchaProvider({ children }: ReCaptchaProviderProps) {
       scriptProps={{
         async: true,
         defer: true,
-        appendTo: "head",
+        appendTo: 'head',
       }}
     >
       {children}
