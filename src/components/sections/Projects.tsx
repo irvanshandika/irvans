@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 type Project = {
   id: string;
@@ -66,9 +67,11 @@ const Projects = () => {
                 >
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={project.imageUrl || ''}
                       alt={project.title}
+                      width={300}
+                      height={200}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>

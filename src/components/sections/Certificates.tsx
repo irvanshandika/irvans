@@ -1,8 +1,9 @@
 import React from 'react';
 import { mockCertificates } from './mock';
 import { ExternalLink, Award } from 'lucide-react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
+import Image from 'next/image';
 
 const Certificates = () => {
   return (
@@ -23,9 +24,11 @@ const Certificates = () => {
             >
               {/* Certificate Image */}
               <div className="relative h-40 overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800">
-                <img
+                <Image
                   src={cert.imageUrl}
                   alt={cert.title}
+                  width={300}
+                  height={200}
                   className="w-full h-full object-cover opacity-50 transition-opacity duration-300 hover:opacity-70"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
