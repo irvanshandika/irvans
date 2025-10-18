@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
@@ -6,27 +7,31 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type Project = {
   id: string;
   title: string;
   description: string;
   imageUrl?: string | null;
-  technologies: string[];
-  githubUrl: string;
-  liveUrl: string;
+  demoUrl?: string | null;
+  githubUrl?: string | null;
   categories: string[];
+  code?: string | null;
   rating: number;
+  ratingCount: number;
   createdAt: Date;
   updatedAt: Date;
 };
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchProjects = async () => {
     try {
+      setLoading(true);
       const response = await fetch('/api/projects');
 
       if (!response.ok) {
@@ -40,6 +45,8 @@ const Projects = () => {
       console.error('Error fetching projects:', err);
       setError('Failed to load projects. Please try again.');
       toast.error('Failed to load projects');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,7 +63,11 @@ const Projects = () => {
             <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto"></div>
           </div>
 
-          {projects.length === 0 ? (
+          {loading ? (
+            <div className="text-center text-gray-400 text-lg">Loading projects...</div>
+          ) : error ? (
+            <div className="text-center text-red-400 text-lg">{error}</div>
+          ) : projects.length === 0 ? (
             <div className="text-center text-gray-400 text-lg">Project not yet available</div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -92,38 +103,47 @@ const Projects = () => {
                       {project.description}
                     </CardDescription>
 
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies && project.technologies.map(tech => (
+                    {/* Categories */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.categories && project.categories.map(category => (
                         <Badge
-                          key={tech}
+                          key={category}
                           variant="secondary"
                           className="bg-blue-500/10 text-blue-400 border-blue-500/30"
                         >
-                          {tech}
+                          {category}
                         </Badge>
                       ))}
+                    </div>
+                    
+                    {/* Rating */}
+                    <div className="text-sm text-gray-400 mt-2">
+                      <span className="text-yellow-400">★</span> {project.rating.toFixed(1)} ({project.ratingCount} reviews)
                     </div>
                   </CardContent>
 
                   <CardFooter className="flex gap-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 border-slate-600 text-gray-300 hover:bg-slate-700 hover:text-white"
-                      asChild
-                    >
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
-                    <Button size="sm" className="flex-1 bg-blue-500 hover:bg-blue-600" asChild>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Demo
-                      </a>
-                    </Button>
+                    {project.githubUrl && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-slate-600 text-gray-300 hover:bg-slate-700 hover:text-white"
+                        asChild
+                      >
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-4 w-4 mr-2" />
+                          Code
+                        </a>
+                      </Button>
+                    )}
+                    {project.demoUrl && (
+                      <Button size="sm" className="flex-1 bg-blue-500 hover:bg-blue-600" asChild>
+                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Demo
+                        </a>
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
               ))}

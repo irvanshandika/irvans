@@ -9,19 +9,24 @@ const prisma = new PrismaClient();
 // GET all projects
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
+    // Fetch all projects without requiring authentication
     const projects = await prisma.project.findMany({
-      where: {
-        userId: session.user.id as string,
-      },
       orderBy: {
         updatedAt: 'desc',
       },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        imageUrl: true,
+        demoUrl: true,
+        githubUrl: true,
+        categories: true,
+        rating: true,
+        ratingCount: true,
+        createdAt: true,
+        updatedAt: true,
+      }
     });
 
     return NextResponse.json(projects);
