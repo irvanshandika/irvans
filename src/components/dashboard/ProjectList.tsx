@@ -5,6 +5,15 @@ import { format } from 'date-fns';
 import { Button } from '@/src/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/src/components/ui/dialog';
+import { Input } from '@/src/components/ui/input';
 
 type Project = {
   id: string;
@@ -21,6 +30,9 @@ export default function ProjectList() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+  const [confirmText, setConfirmText] = useState('');
 
   const fetchProjects = async () => {
     try {
@@ -47,13 +59,19 @@ export default function ProjectList() {
     fetchProjects();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this project?')) {
+  const confirmDelete = (id: string) => {
+    setProjectToDelete(id);
+    setConfirmText('');
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!projectToDelete || confirmText !== 'confirm') {
       return;
     }
 
     try {
-      const response = await fetch(`/api/projects/${id}`, {
+      const response = await fetch(`/api/projects/${projectToDelete}`, {
         method: 'DELETE',
       });
 
@@ -62,6 +80,9 @@ export default function ProjectList() {
       }
 
       toast.success('Project deleted successfully');
+      setDeleteDialogOpen(false);
+      setProjectToDelete(null);
+      setConfirmText('');
       fetchProjects(); // Refresh the list
     } catch (err) {
       console.error('Error deleting project:', err);
@@ -195,7 +216,7 @@ export default function ProjectList() {
                     variant="destructive"
                     size="sm"
                     className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity"
-                    onClick={() => handleDelete(project.id)}
+                    onClick={() => confirmDelete(project.id)}
                   >
                     <Trash2 size={14} />
                     Delete
@@ -206,6 +227,38 @@ export default function ProjectList() {
           </div>
         ))}
       </div>
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Konfirmasi Penghapusan</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this project? Type &quot;confirm&quot; to delete this project.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Input
+              placeholder="Type 'confirm' here"
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              className="mt-2"
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={handleDelete}
+              disabled={confirmText !== 'confirm'}
+            >
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

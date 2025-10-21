@@ -50,6 +50,8 @@ type FormValues = {
   title: string;
   description: string;
   categories: string[];
+  demoUrl: string;
+  githubUrl: string;
   code?: string;
   image?: FileList;
 };
@@ -61,6 +63,8 @@ type ProjectFormProps = {
     title: string;
     description: string;
     categories: string[];
+    demoUrl: string;
+    githubUrl: string;
     code: string;
     imageUrl?: string;
   };
@@ -114,6 +118,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       title: initialData?.title || '',
       description: initialData?.description || '',
       categories: initialData?.categories || [],
+      demoUrl: initialData?.demoUrl || '',
+      githubUrl: initialData?.githubUrl || '',
       code: initialData?.code || '',
     },
     mode: 'onChange',
@@ -299,6 +305,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         title: data.title,
         description: data.description,
         categories: selectedCategories,
+        demoUrl: data.demoUrl,
+        githubUrl: data.githubUrl,
         code: data.code,
         imageUrls: imageUrls.length > 0 ? imageUrls : null,
       };
@@ -360,21 +368,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             <FormItem>
               <FormLabel>Project Title</FormLabel>
               <FormControl>
-                <Input placeholder="Enter project title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter project description" {...field} />
+                <Input placeholder="Enter project title" {...field} required />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -382,18 +376,81 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         />
 
         <div className="space-y-2">
-          <Label>Categories</Label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map(category => (
-              <Button
-                key={category}
-                type="button"
-                variant={selectedCategories.includes(category) ? 'default' : 'outline'}
-                onClick={() => toggleCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
+          <Label>Project Image</Label>
+          <div
+            ref={dropZoneRef}
+            className={`border-2 border-dashed rounded-md p-6 transition-all ${
+              isDragging ? 'border-primary bg-primary/5' : 'border-border'
+            } ${imagePreviews.length > 0 ? 'pb-2' : 'flex flex-col items-center justify-center min-h-[200px]'}`}
+            onDragEnter={handleDragEnter}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+              multiple
+              required
+            />
+
+            {imagePreviews.length === 0 ? (
+              <>
+                <div className="flex flex-col items-center justify-center text-center">
+                  <div className="mb-4 rounded-full bg-primary/10 p-4">
+                    <ImageIcon className="h-8 w-8 text-primary" />
+                  </div>
+                  <p className="mb-2 text-sm font-medium">Click to upload or drag and drop</p>
+                  <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="mt-4"
+                    onClick={handleClickUpload}
+                  >
+                    Select Files
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {imagePreviews.map(image => (
+                    <div key={image.id} className="relative group">
+                      <div className="absolute -right-2 -top-2 z-10">
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          onClick={() => removeImage(image.id)}
+                          className="h-6 w-6 rounded-full opacity-80 group-hover:opacity-100"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      <div className="border rounded-md overflow-hidden">
+                        <Image
+                          src={image.url}
+                          alt="Preview"
+                          className="w-full h-auto aspect-square object-cover"
+                          width={150}
+                          height={150}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <div
+                    className="border-2 border-dashed rounded-md flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors aspect-square"
+                    onClick={handleClickUpload}
+                  >
+                    <Upload className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -473,82 +530,48 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         </div>
 
         <div className="space-y-2">
-          <Label>Project Image</Label>
-          <div
-            ref={dropZoneRef}
-            className={`border-2 border-dashed rounded-md p-6 transition-all ${
-              isDragging ? 'border-primary bg-primary/5' : 'border-border'
-            } ${imagePreviews.length > 0 ? 'pb-2' : 'flex flex-col items-center justify-center min-h-[200px]'}`}
-            onDragEnter={handleDragEnter}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-              multiple
-            />
-
-            {imagePreviews.length === 0 ? (
-              <>
-                <div className="flex flex-col items-center justify-center text-center">
-                  <div className="mb-4 rounded-full bg-primary/10 p-4">
-                    <ImageIcon className="h-8 w-8 text-primary" />
-                  </div>
-                  <p className="mb-2 text-sm font-medium">Click to upload or drag and drop</p>
-                  <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="mt-4"
-                    onClick={handleClickUpload}
-                  >
-                    Select Files
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {imagePreviews.map(image => (
-                    <div key={image.id} className="relative group">
-                      <div className="absolute -right-2 -top-2 z-10">
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          onClick={() => removeImage(image.id)}
-                          className="h-6 w-6 rounded-full opacity-80 group-hover:opacity-100"
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                      <div className="border rounded-md overflow-hidden">
-                        <Image
-                          src={image.url}
-                          alt="Preview"
-                          className="w-full h-auto aspect-square object-cover"
-                          width={150}
-                          height={150}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <div
-                    className="border-2 border-dashed rounded-md flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors aspect-square"
-                    onClick={handleClickUpload}
-                  >
-                    <Upload className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                </div>
-              </div>
-            )}
+          <Label>Categories</Label>
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map(category => (
+              <Button
+                key={category}
+                type="button"
+                variant={selectedCategories.includes(category) ? 'default' : 'outline'}
+                onClick={() => toggleCategory(category)}
+              >
+                {category}
+              </Button>
+            ))}
           </div>
         </div>
+
+        <FormField
+          control={form.control}
+          name="githubUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>GitHub URL</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter GitHub URL" {...field} required />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="demoUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Demo URL</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Demo URL" {...field} required />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="flex justify-end gap-4">
           <Button
