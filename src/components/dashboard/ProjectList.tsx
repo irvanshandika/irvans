@@ -14,7 +14,6 @@ import {
   DialogTitle,
 } from '@/src/components/ui/dialog';
 import { Input } from '@/src/components/ui/input';
-import { getPublicIdFromUrl } from '@/src/lib/cloudinary';
 
 type Project = {
   id: string;
@@ -66,50 +65,18 @@ export default function ProjectList() {
     setDeleteDialogOpen(true);
   };
 
-  const deleteCloudinaryImage = async (imageUrl: string | null | undefined) => {
-    if (!imageUrl) return;
-    
-    const publicId = getPublicIdFromUrl(imageUrl);
-    if (!publicId) return;
-    
-    try {
-      const response = await fetch('/api/upload/delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ publicId }),
-      });
-      
-      if (!response.ok) {
-        console.error('Failed to delete image from Cloudinary');
-      }
-    } catch (error) {
-      console.error('Error deleting image from Cloudinary:', error);
-    }
-  };
-
   const handleDelete = async () => {
     if (!projectToDelete || confirmText !== 'confirm') {
       return;
     }
 
     try {
-      // Find the project to get its image URL
-      const projectToDeleteData = projects.find(p => p.id === projectToDelete);
-      
-      // Delete the project from the database
       const response = await fetch(`/api/projects/${projectToDelete}`, {
         method: 'DELETE',
       });
 
       if (!response.ok) {
         throw new Error('Failed to delete project');
-      }
-      
-      // Delete the associated image from Cloudinary
-      if (projectToDeleteData?.imageUrl) {
-        await deleteCloudinaryImage(projectToDeleteData.imageUrl);
       }
 
       toast.success('Project deleted successfully');
