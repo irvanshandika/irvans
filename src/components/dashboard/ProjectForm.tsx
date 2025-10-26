@@ -50,8 +50,6 @@ type FormValues = {
   title: string;
   description: string;
   categories: string[];
-  demoUrl: string;
-  githubUrl: string;
   code?: string;
   image?: FileList;
 };
@@ -63,8 +61,6 @@ type ProjectFormProps = {
     title: string;
     description: string;
     categories: string[];
-    demoUrl: string;
-    githubUrl: string;
     code: string;
     imageUrl?: string;
   };
@@ -90,27 +86,17 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
   // Tiptap Editor setup
   const editor = useEditor({
     extensions: [StarterKit, CodeBlock, Highlight],
-    content: initialData?.code
-      ? // Coba parse JSON jika konten dalam format JSON, jika gagal gunakan sebagai string
-        (() => {
-          try {
-            return JSON.parse(initialData.code);
-          } catch (e) {
-            return initialData.code;
-          }
-        })()
-      : '',
+    content: initialData?.description || '',
     onUpdate: ({ editor }) => {
-      // Menyimpan konten editor dalam format JSON
-      const json = editor.getJSON();
-      form.setValue('code', JSON.stringify(json));
+      const html = editor.getHTML();
+      form.setValue('description', html);
     },
     editorProps: {
       attributes: {
         class: 'focus:outline-none',
       },
     },
-    immediatelyRender: false, // Mengatasi error SSR hydration mismatch
+    immediatelyRender: false,
   });
 
   const form = useForm<FormValues>({
@@ -118,8 +104,6 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       title: initialData?.title || '',
       description: initialData?.description || '',
       categories: initialData?.categories || [],
-      demoUrl: initialData?.demoUrl || '',
-      githubUrl: initialData?.githubUrl || '',
       code: initialData?.code || '',
     },
     mode: 'onChange',
@@ -305,8 +289,6 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         title: data.title,
         description: data.description,
         categories: selectedCategories,
-        demoUrl: data.demoUrl,
-        githubUrl: data.githubUrl,
         code: data.code,
         imageUrls: imageUrls.length > 0 ? imageUrls : null,
       };
@@ -360,27 +342,152 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto bg-card dark:bg-card rounded-lg p-6 shadow-sm dark:shadow-md transition-all">
+        <div className="mb-4">
+          <h2 className="text-2xl font-medium text-foreground/90 dark:text-foreground/90 mb-1">
+            {projectId ? 'Edit Project' : 'Create New Project'}
+          </h2>
+          <p className="text-muted-foreground text-sm">
+            Fill in the details below to {projectId ? 'update your' : 'create a new'} project
+          </p>
+        </div>
+        
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Title</FormLabel>
+              <FormLabel className="text-foreground/80 font-medium">Project Title</FormLabel>
               <FormControl>
-                <Input placeholder="Enter project title" {...field} required />
+                <Input 
+                  placeholder="Enter project title" 
+                  {...field} 
+                  className="bg-background/50 dark:bg-background/50 border-border/30 focus-visible:ring-primary/50 transition-all" 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="space-y-2">
-          <Label>Project Image</Label>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-foreground/80 font-medium">Description</FormLabel>
+              <FormControl>
+                <div className="border border-border/30 rounded-lg overflow-hidden bg-background/50 dark:bg-background/50 transition-all">
+                  <div className="flex items-center gap-1 border-b border-border/20 p-2 bg-muted/30 dark:bg-muted/20">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleBold().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('bold') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <Bold className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleItalic().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('italic') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <Italic className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('codeBlock') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <Code className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('bulletList') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <List className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('orderedList') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <ListOrdered className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 1 }) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <Heading1 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 2 }) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                    >
+                      <Heading2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <EditorContent
+                    editor={editor}
+                    className="min-h-[200px] p-4 focus:outline-none prose dark:prose-invert max-w-none"
+                    onBlur={() => {
+                      if (editor) {
+                        const html = editor.getHTML();
+                        field.onChange(html);
+                      }
+                    }}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="space-y-3">
+          <Label className="text-foreground/80 font-medium">Categories</Label>
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map(category => (
+              <Button
+                key={category}
+                type="button"
+                variant={selectedCategories.includes(category) ? 'default' : 'outline'}
+                onClick={() => toggleCategory(category)}
+                className={selectedCategories.includes(category) 
+                  ? 'bg-primary/90 hover:bg-primary/80 text-primary-foreground shadow-sm transition-all' 
+                  : 'border-border/30 hover:bg-background hover:text-foreground/90 transition-all'
+                }
+                size="sm"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">Select at least one category that best describes your project</p>
+        </div>
+
+        <div className="space-y-3">
+          <Label className="text-foreground/80 font-medium">Project Image</Label>
           <div
             ref={dropZoneRef}
-            className={`border-2 border-dashed rounded-md p-6 transition-all ${
-              isDragging ? 'border-primary bg-primary/5' : 'border-border'
+            className={`border border-dashed rounded-lg p-6 transition-all ${
+              isDragging ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-border/40 bg-background/50 dark:bg-background/50'
             } ${imagePreviews.length > 0 ? 'pb-2' : 'flex flex-col items-center justify-center min-h-[200px]'}`}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
@@ -394,21 +501,20 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               onChange={handleImageChange}
               className="hidden"
               multiple
-              required
             />
 
             {imagePreviews.length === 0 ? (
               <>
                 <div className="flex flex-col items-center justify-center text-center">
-                  <div className="mb-4 rounded-full bg-primary/10 p-4">
+                  <div className="mb-4 rounded-full bg-primary/10 dark:bg-primary/20 p-4">
                     <ImageIcon className="h-8 w-8 text-primary" />
                   </div>
-                  <p className="mb-2 text-sm font-medium">Click to upload or drag and drop</p>
+                  <p className="mb-2 text-sm font-medium text-foreground/90">Click to upload or drag and drop</p>
                   <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
                   <Button
                     type="button"
                     variant="outline"
-                    className="mt-4"
+                    className="mt-4 border-border/30 hover:bg-primary/5 hover:text-primary transition-all"
                     onClick={handleClickUpload}
                   >
                     Select Files
@@ -426,12 +532,12 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                           variant="destructive"
                           size="icon"
                           onClick={() => removeImage(image.id)}
-                          className="h-6 w-6 rounded-full opacity-80 group-hover:opacity-100"
+                          className="h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 shadow-sm transition-all"
                         >
                           <X className="h-3 w-3" />
                         </Button>
                       </div>
-                      <div className="border rounded-md overflow-hidden">
+                      <div className="border border-border/30 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <Image
                           src={image.url}
                           alt="Preview"
@@ -443,7 +549,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                     </div>
                   ))}
                   <div
-                    className="border-2 border-dashed rounded-md flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors aspect-square"
+                    className="border border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:bg-primary/5 dark:hover:bg-primary/10 transition-all aspect-square"
                     onClick={handleClickUpload}
                   >
                     <Upload className="h-8 w-8 text-muted-foreground" />
@@ -452,128 +558,10 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               </div>
             )}
           </div>
+          <p className="text-xs text-muted-foreground mt-1">Upload high-quality images to showcase your project</p>
         </div>
 
-        <div className="space-y-2">
-          <Label>Description</Label>
-          <div className="border rounded-md p-1">
-            <div className="flex items-center gap-1 border-b p-1 mb-1">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleBold().run()}
-                className={editor?.isActive('bold') ? 'bg-muted' : ''}
-              >
-                <Bold className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleItalic().run()}
-                className={editor?.isActive('italic') ? 'bg-muted' : ''}
-              >
-                <Italic className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
-                className={editor?.isActive('codeBlock') ? 'bg-muted' : ''}
-              >
-                <Code className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleBulletList().run()}
-                className={editor?.isActive('bulletList') ? 'bg-muted' : ''}
-              >
-                <List className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleOrderedList().run()}
-                className={editor?.isActive('orderedList') ? 'bg-muted' : ''}
-              >
-                <ListOrdered className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-                className={editor?.isActive('heading', { level: 1 }) ? 'bg-muted' : ''}
-              >
-                <Heading1 className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-                className={editor?.isActive('heading', { level: 2 }) ? 'bg-muted' : ''}
-              >
-                <Heading2 className="h-4 w-4" />
-              </Button>
-            </div>
-            <EditorContent
-              editor={editor}
-              className="min-h-[200px] p-2 focus:outline-none prose dark:prose-invert max-w-none"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Categories</Label>
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map(category => (
-              <Button
-                key={category}
-                type="button"
-                variant={selectedCategories.includes(category) ? 'default' : 'outline'}
-                onClick={() => toggleCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        <FormField
-          control={form.control}
-          name="githubUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>GitHub URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter GitHub URL" {...field} required />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="demoUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Demo URL</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter Demo URL" {...field} required />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 pt-4 border-t border-border/20 mt-8">
           <Button
             type="button"
             variant="outline"
@@ -582,11 +570,20 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               setSelectedCategories([]);
               editor?.commands.clearContent();
               setImagePreviews([]);
+              if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+              }
             }}
+            disabled={isSubmitting}
+            className="border-border/30 hover:bg-background hover:text-foreground/90 transition-all"
           >
-            Cancel
+            Reset
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm transition-all"
+          >
             {isSubmitting ? 'Saving...' : projectId ? 'Update Project' : 'Create Project'}
           </Button>
         </div>
