@@ -7,48 +7,51 @@ import Image from 'next/image';
 
 const Certificates = () => {
   return (
-    <section id="certificates" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/50">
+    <section
+      id="certificates"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-900"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Certificates & Achievements
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto"></div>
+          <div className="w-20 h-1 bg-linear-to-r from-blue-500 to-cyan-400 mx-auto"></div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {mockCertificates.map(cert => (
             <Card
               key={cert.id}
-              className="bg-slate-800/50 border-slate-700 overflow-hidden hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105 flex flex-col"
+              className="bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 overflow-hidden hover:shadow-xl hover:shadow-blue-400/20 dark:hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105 flex flex-col"
             >
               {/* Certificate Image */}
-              <div className="relative h-40 overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800">
+              <div className="relative h-40 overflow-hidden bg-linear-to-br from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-800">
                 <Image
                   src={cert.imageUrl}
                   alt={cert.title}
                   width={300}
                   height={200}
-                  className="w-full h-full object-cover opacity-50 transition-opacity duration-300 hover:opacity-70"
+                  className="w-full h-full object-cover opacity-60 dark:opacity-40 transition-opacity duration-300 hover:opacity-80 dark:hover:opacity-60"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Award className="h-12 w-12 text-blue-400 opacity-80" />
+                  <Award className="h-12 w-12 text-blue-500 dark:text-blue-400 opacity-90" />
                 </div>
               </div>
 
-              <CardHeader className="flex-grow">
-                <CardTitle className="text-lg font-bold text-white leading-tight">
+              <CardHeader className="grow">
+                <CardTitle className="text-lg font-bold text-gray-900 dark:text-white leading-tight">
                   {cert.title}
                 </CardTitle>
-                <p className="text-sm text-gray-400 mt-2">{cert.issuer}</p>
-                <p className="text-xs text-gray-500 mt-1">{cert.date}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{cert.issuer}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{cert.date}</p>
               </CardHeader>
 
               <CardFooter>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full border-slate-600 text-gray-300 hover:bg-slate-700 hover:text-white"
+                  className="w-full border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
                   asChild
                 >
                   <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">

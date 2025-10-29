@@ -14,6 +14,22 @@ import {
 
 export default function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  // Setelah komponen di-mount di client, set mounted ke true
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Render placeholder jika belum di-mount untuk mencegah hydration mismatch
+  if (!mounted) {
+    return (
+      <Button variant="outline" size="icon">
+        <span className="h-[1.2rem] w-[1.2rem]" />
+        <span className="sr-only">Toggle theme</span>
+      </Button>
+    );
+  }
 
   const getThemeIcon = () => {
     switch (theme) {

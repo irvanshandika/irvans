@@ -57,12 +57,12 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto mb-4"></div>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Get In Touch</h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach out!
           </p>
         </div>
@@ -73,22 +73,22 @@ const Contact = () => {
             {contactInfo.map((info, index) => (
               <Card
                 key={index}
-                className="bg-slate-800/50 border-slate-700 hover:bg-slate-800 transition-all duration-300 hover:scale-105"
+                className="bg-slate-100/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-300 hover:scale-105"
               >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 text-blue-400">{info.icon}</div>
+                    <div className="flex-shrink-0 text-blue-600 dark:text-blue-400">{info.icon}</div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">{info.title}</h3>
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">{info.title}</h3>
                       {info.link ? (
                         <a
                           href={info.link}
-                          className="text-gray-400 hover:text-blue-400 transition-colors"
+                          className="text-slate-700 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                           {info.value}
                         </a>
                       ) : (
-                        <p className="text-gray-400">{info.value}</p>
+                        <p className="text-slate-700 dark:text-slate-400">{info.value}</p>
                       )}
                     </div>
                   </div>
@@ -99,11 +99,11 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="md:col-span-2">
-            <Card className="bg-slate-800/50 border-slate-700">
+            <Card className="bg-slate-100/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
                       Your Name
                     </label>
                     <Input
@@ -113,13 +113,13 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="bg-slate-900 border-slate-700 text-white placeholder-gray-500 focus:border-blue-500"
+                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500"
                       placeholder="John Doe"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
                       Your Email
                     </label>
                     <Input
@@ -129,7 +129,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="bg-slate-900 border-slate-700 text-white placeholder-gray-500 focus:border-blue-500"
+                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -137,7 +137,7 @@ const Contact = () => {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium text-gray-300 mb-2"
+                      className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
                     >
                       Your Message
                     </label>
@@ -148,7 +148,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
-                      className="bg-slate-900 border-slate-700 text-white placeholder-gray-500 focus:border-blue-500 resize-none"
+                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 resize-none"
                       placeholder="Tell me about your project..."
                     />
                   </div>
@@ -156,7 +156,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-500/50"
+                    className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
                   >
                     {isSubmitting ? (
                       <>Sending...</>

@@ -56,7 +56,7 @@ export default function RootLayout({
         <link rel="canonical" href="https://irvans.my.id" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 light:bg-gradient-to-br light:from-gray-50 light:via-white light:to-gray-100">
+      <body className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-300">
         <AuthProvider>
           <ReCaptchaProvider>
             <GoogleAnalytics gaId="G-QWFK1HLP35" />

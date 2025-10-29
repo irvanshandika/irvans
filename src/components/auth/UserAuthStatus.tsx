@@ -18,14 +18,22 @@ export function UserAuthStatus() {
   const isLoading = status === 'loading';
 
   if (isLoading) {
-    return <div className="text-sm">Loading...</div>;
+    return (
+      <div className="text-sm text-foreground/70 dark:text-foreground/50">
+        Loading...
+      </div>
+    );
   }
 
   if (!session) {
     return (
       <div className="flex gap-2">
         <Link href="/auth/login">
-          <Button variant="outline" size="sm">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-border dark:border-border-dark"
+          >
             Login
           </Button>
         </Link>
@@ -38,13 +46,15 @@ export function UserAuthStatus() {
 
   const handleSignOut = async () => {
     toast.success(`See You Again, ${session.user?.name}!`, {
-      duration: 5000, // Toast will stay for 5 seconds
+      duration: 5000,
     });
     await signOut({ callbackUrl: '/' });
   };
 
-  // Helper to truncate long names
-  const truncateName = (name: string | null | undefined, max: number = 12) => {
+  const truncateName = (
+    name: string | null | undefined,
+    max: number = 12
+  ) => {
     if (!name) return 'Profile';
     return name.length > max ? name.slice(0, max) + '…' : name;
   };
@@ -53,7 +63,7 @@ export function UserAuthStatus() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 rounded-full border p-1 hover:bg-accent hover:text-accent-foreground">
+          <button className="flex items-center gap-2 rounded-full border border-border dark:border-border-dark bg-background dark:bg-background-dark p-1 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent-dark dark:hover:text-accent-foreground-dark transition-colors">
             <Image
               src={session.user?.image || '/placeholder.svg'}
               alt={session.user?.name || 'Profile'}
@@ -61,14 +71,16 @@ export function UserAuthStatus() {
               height={32}
               className="rounded-full"
             />
-            <span className="text-sm font-medium">{truncateName(session.user?.name)}</span>
+            <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
+              {truncateName(session.user?.name)}
+            </span>
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-1"
+              className="mr-1 text-foreground/70 dark:text-foreground-dark/70"
             >
               <path
                 d="M6 9L12 15L18 9"
@@ -80,7 +92,10 @@ export function UserAuthStatus() {
             </svg>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end">
+        <DropdownMenuContent
+          className="w-56 bg-popover dark:bg-popover-dark text-popover-foreground dark:text-popover-foreground-dark border-border dark:border-border-dark"
+          align="end"
+        >
           <DropdownMenuLabel>
             <div className="flex items-center gap-3">
               <div className="w-[40px] h-[40px] relative">
@@ -92,16 +107,21 @@ export function UserAuthStatus() {
                 />
               </div>
               <div className="flex flex-col space-y-0.5">
-                <span className="font-medium truncate">{session.user?.name}</span>
-                <span className="text-xs text-muted-foreground truncate">
+                <span className="font-medium truncate text-foreground dark:text-foreground-dark">
+                  {session.user?.name}
+                </span>
+                <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark truncate">
                   {session.user?.email}
                 </span>
               </div>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
+          <DropdownMenuSeparator className="bg-border dark:bg-border-dark" />
           <DropdownMenuItem asChild>
-            <Link href="/dashboard" className="cursor-pointer flex items-center">
+            <Link
+              href="/dashboard"
+              className="cursor-pointer flex items-center text-foreground dark:text-foreground-dark hover:bg-accent dark:hover:bg-accent-dark"
+            >
               <svg
                 width="16"
                 height="16"
@@ -143,7 +163,10 @@ export function UserAuthStatus() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile" className="cursor-pointer flex items-center">
+            <Link
+              href="/profile"
+              className="cursor-pointer flex items-center text-foreground dark:text-foreground-dark hover:bg-accent dark:hover:bg-accent-dark"
+            >
               <svg
                 width="16"
                 height="16"
@@ -172,7 +195,7 @@ export function UserAuthStatus() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleSignOut}
-            className="cursor-pointer flex items-center text-red-600 focus:text-red-600"
+            className="cursor-pointer flex items-center text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:text-red-600 dark:focus:text-red-400"
           >
             <svg
               width="16"
