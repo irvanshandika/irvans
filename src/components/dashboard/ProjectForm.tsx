@@ -342,9 +342,9 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto bg-card dark:bg-card rounded-lg p-6 shadow-sm dark:shadow-md transition-all">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto bg-background rounded-lg p-6 shadow-sm transition-all">
         <div className="mb-4">
-          <h2 className="text-2xl font-medium text-foreground/90 dark:text-foreground/90 mb-1">
+          <h2 className="text-2xl font-medium text-foreground mb-1">
             {projectId ? 'Edit Project' : 'Create New Project'}
           </h2>
           <p className="text-muted-foreground text-sm">
@@ -357,12 +357,12 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-foreground/80 font-medium">Project Title</FormLabel>
+              <FormLabel className="font-medium">Project Title</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Enter project title" 
                   {...field} 
-                  className="bg-background/50 dark:bg-background/50 border-border/30 focus-visible:ring-primary/50 transition-all" 
+                  className="bg-muted/30 border-border focus-visible:ring-ring transition-all" 
                 />
               </FormControl>
               <FormMessage />
@@ -375,16 +375,16 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-foreground/80 font-medium">Description</FormLabel>
+              <FormLabel className="font-medium">Description</FormLabel>
               <FormControl>
-                <div className="border border-border/30 rounded-lg overflow-hidden bg-background/50 dark:bg-background/50 transition-all">
-                  <div className="flex items-center gap-1 border-b border-border/20 p-2 bg-muted/30 dark:bg-muted/20">
+                <div className="border border-border rounded-lg overflow-hidden bg-muted/30 transition-all">
+                  <div className="flex items-center gap-1 border-b border-border/20 p-2 bg-muted/40">
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleBold().run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('bold') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('bold') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <Bold className="h-4 w-4" />
                     </Button>
@@ -393,7 +393,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleItalic().run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('italic') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('italic') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <Italic className="h-4 w-4" />
                     </Button>
@@ -402,7 +402,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('codeBlock') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('codeBlock') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <Code className="h-4 w-4" />
                     </Button>
@@ -411,7 +411,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleBulletList().run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('bulletList') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('bulletList') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <List className="h-4 w-4" />
                     </Button>
@@ -420,7 +420,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleOrderedList().run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('orderedList') ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('orderedList') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <ListOrdered className="h-4 w-4" />
                     </Button>
@@ -429,7 +429,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 1 }) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 1 }) ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <Heading1 className="h-4 w-4" />
                     </Button>
@@ -438,7 +438,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                       variant="ghost"
                       size="sm"
                       onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
-                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 2 }) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5 hover:text-primary/90'}`}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 2 }) ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
                     >
                       <Heading2 className="h-4 w-4" />
                     </Button>
@@ -461,7 +461,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         />
 
         <div className="space-y-3">
-          <Label className="text-foreground/80 font-medium">Categories</Label>
+          <Label className="font-medium">Categories</Label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map(category => (
               <Button
@@ -470,8 +470,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                 variant={selectedCategories.includes(category) ? 'default' : 'outline'}
                 onClick={() => toggleCategory(category)}
                 className={selectedCategories.includes(category) 
-                  ? 'bg-primary/90 hover:bg-primary/80 text-primary-foreground shadow-sm transition-all' 
-                  : 'border-border/30 hover:bg-background hover:text-foreground/90 transition-all'
+                  ? 'bg-primary text-primary-foreground shadow-sm transition-all' 
+                  : 'border-border hover:bg-accent hover:text-accent-foreground transition-all'
                 }
                 size="sm"
               >
@@ -483,11 +483,11 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
         </div>
 
         <div className="space-y-3">
-          <Label className="text-foreground/80 font-medium">Project Image</Label>
+          <Label className="font-medium">Project Image</Label>
           <div
             ref={dropZoneRef}
             className={`border border-dashed rounded-lg p-6 transition-all ${
-              isDragging ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-border/40 bg-background/50 dark:bg-background/50'
+              isDragging ? 'border-primary bg-primary/10' : 'border-border bg-muted/30'
             } ${imagePreviews.length > 0 ? 'pb-2' : 'flex flex-col items-center justify-center min-h-[200px]'}`}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
@@ -506,15 +506,15 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             {imagePreviews.length === 0 ? (
               <>
                 <div className="flex flex-col items-center justify-center text-center">
-                  <div className="mb-4 rounded-full bg-primary/10 dark:bg-primary/20 p-4">
-                    <ImageIcon className="h-8 w-8 text-primary" />
+                  <div className="mb-4 rounded-full bg-accent p-4">
+                    <ImageIcon className="h-8 w-8 text-accent-foreground" />
                   </div>
-                  <p className="mb-2 text-sm font-medium text-foreground/90">Click to upload or drag and drop</p>
+                  <p className="mb-2 text-sm font-medium text-foreground">Click to upload or drag and drop</p>
                   <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
                   <Button
                     type="button"
                     variant="outline"
-                    className="mt-4 border-border/30 hover:bg-primary/5 hover:text-primary transition-all"
+                    className="mt-4 border-border hover:bg-accent hover:text-accent-foreground transition-all"
                     onClick={handleClickUpload}
                   >
                     Select Files
@@ -537,7 +537,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                           <X className="h-3 w-3" />
                         </Button>
                       </div>
-                      <div className="border border-border/30 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+                      <div className="border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
                         <Image
                           src={image.url}
                           alt="Preview"
@@ -549,7 +549,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                     </div>
                   ))}
                   <div
-                    className="border border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:bg-primary/5 dark:hover:bg-primary/10 transition-all aspect-square"
+                    className="border border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:bg-accent/50 transition-all aspect-square"
                     onClick={handleClickUpload}
                   >
                     <Upload className="h-8 w-8 text-muted-foreground" />
@@ -561,7 +561,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
           <p className="text-xs text-muted-foreground mt-1">Upload high-quality images to showcase your project</p>
         </div>
 
-        <div className="flex justify-end gap-4 pt-4 border-t border-border/20 mt-8">
+        <div className="flex justify-end gap-4 pt-4 border-t border-border mt-8">
           <Button
             type="button"
             variant="outline"
@@ -575,14 +575,14 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               }
             }}
             disabled={isSubmitting}
-            className="border-border/30 hover:bg-background hover:text-foreground/90 transition-all"
+            className="border-border hover:bg-accent hover:text-accent-foreground transition-all"
           >
             Reset
           </Button>
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm transition-all"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-all"
           >
             {isSubmitting ? 'Saving...' : projectId ? 'Update Project' : 'Create Project'}
           </Button>

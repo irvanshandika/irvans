@@ -19,7 +19,7 @@ export function UserAuthStatus() {
 
   if (isLoading) {
     return (
-      <div className="text-sm text-foreground/70 dark:text-foreground/50">
+      <div className="text-sm text-muted-foreground">
         Loading...
       </div>
     );
@@ -32,7 +32,6 @@ export function UserAuthStatus() {
           <Button
             variant="outline"
             size="sm"
-            className="border-border dark:border-border-dark"
           >
             Login
           </Button>
@@ -63,7 +62,7 @@ export function UserAuthStatus() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 rounded-full border border-border dark:border-border-dark bg-background dark:bg-background-dark p-1 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent-dark dark:hover:text-accent-foreground-dark transition-colors">
+          <button className="flex items-center gap-2 rounded-full border border-border bg-background p-1 hover:bg-accent hover:text-accent-foreground transition-colors">
             <Image
               src={session.user?.image || '/placeholder.svg'}
               alt={session.user?.name || 'Profile'}
@@ -71,7 +70,7 @@ export function UserAuthStatus() {
               height={32}
               className="rounded-full"
             />
-            <span className="text-sm font-medium text-foreground dark:text-foreground-dark">
+            <span className="text-sm font-medium">
               {truncateName(session.user?.name)}
             </span>
             <svg
@@ -80,7 +79,7 @@ export function UserAuthStatus() {
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-1 text-foreground/70 dark:text-foreground-dark/70"
+              className="mr-1 text-muted-foreground"
             >
               <path
                 d="M6 9L12 15L18 9"
@@ -93,7 +92,7 @@ export function UserAuthStatus() {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-popover dark:bg-popover-dark text-popover-foreground dark:text-popover-foreground-dark border-border dark:border-border-dark"
+          className="w-56"
           align="end"
         >
           <DropdownMenuLabel>
@@ -107,20 +106,20 @@ export function UserAuthStatus() {
                 />
               </div>
               <div className="flex flex-col space-y-0.5">
-                <span className="font-medium truncate text-foreground dark:text-foreground-dark">
+                <span className="font-medium truncate">
                   {session.user?.name}
                 </span>
-                <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark truncate">
+                <span className="text-xs text-muted-foreground truncate">
                   {session.user?.email}
                 </span>
               </div>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-border dark:bg-border-dark" />
+          <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link
               href="/dashboard"
-              className="cursor-pointer flex items-center text-foreground dark:text-foreground-dark hover:bg-accent dark:hover:bg-accent-dark"
+              className="cursor-pointer flex items-center"
             >
               <svg
                 width="16"
@@ -165,7 +164,7 @@ export function UserAuthStatus() {
           <DropdownMenuItem asChild>
             <Link
               href="/profile"
-              className="cursor-pointer flex items-center text-foreground dark:text-foreground-dark hover:bg-accent dark:hover:bg-accent-dark"
+              className="cursor-pointer flex items-center"
             >
               <svg
                 width="16"
@@ -195,7 +194,7 @@ export function UserAuthStatus() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleSignOut}
-            className="cursor-pointer flex items-center text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:text-red-600 dark:focus:text-red-400"
+            className="cursor-pointer flex items-center text-destructive"
           >
             <svg
               width="16"

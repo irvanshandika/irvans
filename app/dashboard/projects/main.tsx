@@ -30,7 +30,7 @@ export default function ProjectsMain() {
             <div className="bg-card dark:bg-card/80 rounded-xl border shadow-sm p-6 transition-colors duration-200">
               <div className="flex items-center gap-2 mb-6">
                 <List className="h-5 w-5 text-primary" />
-                <h2 className="text-xl font-semibold">Project List</h2>
+                <h2 className="text-xl text-black dark:text-white">Project List</h2>
               </div>
               <ProjectList key={refreshList ? 'refresh' : 'initial'} />
             </div>

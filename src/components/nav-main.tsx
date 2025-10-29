@@ -43,7 +43,7 @@ export function NavMain({
               className="size-8 group-data-[collapsible=icon]:opacity-0"
               variant="outline"
             >
-              <IconMail />
+              <IconMail className="text-white dark:text-muted-foreground" />
               <span className="sr-only">Inbox</span>
             </Button>
           </SidebarMenuItem>
