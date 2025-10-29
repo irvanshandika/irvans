@@ -60,7 +60,9 @@ const Contact = () => {
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Get In Touch</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+            Get In Touch
+          </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach out!
@@ -77,9 +79,13 @@ const Contact = () => {
               >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 text-blue-600 dark:text-blue-400">{info.icon}</div>
+                    <div className="flex-shrink-0 text-blue-600 dark:text-blue-400">
+                      {info.icon}
+                    </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">{info.title}</h3>
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">
+                        {info.title}
+                      </h3>
                       {info.link ? (
                         <a
                           href={info.link}
@@ -103,7 +109,10 @@ const Contact = () => {
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
+                    >
                       Your Name
                     </label>
                     <Input
@@ -119,7 +128,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
+                    >
                       Your Email
                     </label>
                     <Input

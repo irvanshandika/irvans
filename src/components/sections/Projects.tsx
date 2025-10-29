@@ -59,16 +59,22 @@ const Projects = () => {
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">Featured Projects</h2>
+            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+              Featured Projects
+            </h2>
             <div className="w-20 h-1 bg-linear-to-r from-blue-500 to-cyan-500 mx-auto"></div>
           </div>
 
           {loading ? (
-            <div className="text-center text-slate-500 dark:text-gray-400 text-lg">Loading projects...</div>
+            <div className="text-center text-slate-500 dark:text-gray-400 text-lg">
+              Loading projects...
+            </div>
           ) : error ? (
             <div className="text-center text-red-500 dark:text-red-400 text-lg">{error}</div>
           ) : projects.length === 0 ? (
-            <div className="text-center text-slate-500 dark:text-gray-400 text-lg">Project not yet available</div>
+            <div className="text-center text-slate-500 dark:text-gray-400 text-lg">
+              Project not yet available
+            </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map(project => (
@@ -79,13 +85,13 @@ const Projects = () => {
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
                     {project.imageUrl ? (
-                    <Image
-                      src={project.imageUrl || ''}
-                      alt={project.title}
-                      width={300}
-                      height={200}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
+                      <Image
+                        src={project.imageUrl || ''}
+                        alt={project.title}
+                        width={300}
+                        height={200}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                      />
                     ) : (
                       <div className="w-full h-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center">
                         <span className="text-slate-500 dark:text-gray-400">No Image</span>
@@ -95,7 +101,9 @@ const Projects = () => {
                   </div>
 
                   <CardHeader>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">{project.title}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                      {project.title}
+                    </CardTitle>
                   </CardHeader>
 
                   <CardContent className="flex-grow">
@@ -105,20 +113,22 @@ const Projects = () => {
 
                     {/* Categories */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {project.categories && project.categories.map(category => (
-                        <Badge
-                          key={category}
-                          variant="secondary"
-                          className="bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-300 dark:border-blue-500/30"
-                        >
-                          {category}
-                        </Badge>
-                      ))}
+                      {project.categories &&
+                        project.categories.map(category => (
+                          <Badge
+                            key={category}
+                            variant="secondary"
+                            className="bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-300 dark:border-blue-500/30"
+                          >
+                            {category}
+                          </Badge>
+                        ))}
                     </div>
-                    
+
                     {/* Rating */}
                     <div className="text-sm text-slate-600 dark:text-gray-400 mt-2">
-                      <span className="text-yellow-500">★</span> {project.rating.toFixed(1)} ({project.ratingCount} reviews)
+                      <span className="text-yellow-500">★</span> {project.rating.toFixed(1)} (
+                      {project.ratingCount} reviews)
                     </div>
                   </CardContent>
 
@@ -137,7 +147,11 @@ const Projects = () => {
                       </Button>
                     )}
                     {project.demoUrl && (
-                      <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" asChild>
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        asChild
+                      >
                         <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-4 w-4 mr-2" />
                           Demo

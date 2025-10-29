@@ -7,10 +7,7 @@ import Image from 'next/image';
 
 const Certificates = () => {
   return (
-    <section
-      id="certificates"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-900"
-    >
+    <section id="certificates" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">

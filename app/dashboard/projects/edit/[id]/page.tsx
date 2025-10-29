@@ -69,11 +69,6 @@ export default function EditProjectPage() {
   return (
     <div className="container mx-auto py-6">
       <Toaster position="top-right" />
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Edit Project</h1>
-        <p className="text-gray-500">Update your project details</p>
-      </div>
-
       {project && (
         <ProjectForm projectId={projectId} initialData={project} onSuccess={handleSuccess} />
       )}

@@ -18,21 +18,14 @@ export function UserAuthStatus() {
   const isLoading = status === 'loading';
 
   if (isLoading) {
-    return (
-      <div className="text-sm text-muted-foreground">
-        Loading...
-      </div>
-    );
+    return <div className="text-sm text-muted-foreground">Loading...</div>;
   }
 
   if (!session) {
     return (
       <div className="flex gap-2">
         <Link href="/auth/login">
-          <Button
-            variant="outline"
-            size="sm"
-          >
+          <Button variant="outline" size="sm">
             Login
           </Button>
         </Link>
@@ -50,10 +43,7 @@ export function UserAuthStatus() {
     await signOut({ callbackUrl: '/' });
   };
 
-  const truncateName = (
-    name: string | null | undefined,
-    max: number = 12
-  ) => {
+  const truncateName = (name: string | null | undefined, max: number = 12) => {
     if (!name) return 'Profile';
     return name.length > max ? name.slice(0, max) + '…' : name;
   };
@@ -70,9 +60,7 @@ export function UserAuthStatus() {
               height={32}
               className="rounded-full"
             />
-            <span className="text-sm font-medium">
-              {truncateName(session.user?.name)}
-            </span>
+            <span className="text-sm font-medium">{truncateName(session.user?.name)}</span>
             <svg
               width="16"
               height="16"
@@ -91,10 +79,7 @@ export function UserAuthStatus() {
             </svg>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-56"
-          align="end"
-        >
+        <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>
             <div className="flex items-center gap-3">
               <div className="w-[40px] h-[40px] relative">
@@ -106,9 +91,7 @@ export function UserAuthStatus() {
                 />
               </div>
               <div className="flex flex-col space-y-0.5">
-                <span className="font-medium truncate">
-                  {session.user?.name}
-                </span>
+                <span className="font-medium truncate">{session.user?.name}</span>
                 <span className="text-xs text-muted-foreground truncate">
                   {session.user?.email}
                 </span>
@@ -117,10 +100,7 @@ export function UserAuthStatus() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link
-              href="/dashboard"
-              className="cursor-pointer flex items-center"
-            >
+            <Link href="/dashboard" className="cursor-pointer flex items-center">
               <svg
                 width="16"
                 height="16"
@@ -162,10 +142,7 @@ export function UserAuthStatus() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link
-              href="/profile"
-              className="cursor-pointer flex items-center"
-            >
+            <Link href="/profile" className="cursor-pointer flex items-center">
               <svg
                 width="16"
                 height="16"

@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
         ratingCount: true,
         createdAt: true,
         updatedAt: true,
-      }
+      },
     });
 
     return NextResponse.json(projects);

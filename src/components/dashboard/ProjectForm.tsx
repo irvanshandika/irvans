@@ -342,7 +342,10 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-3xl mx-auto bg-background rounded-lg p-6 shadow-sm transition-all">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6 max-w-3xl mx-auto bg-background rounded-lg p-6 shadow-sm transition-all"
+      >
         <div className="mb-4">
           <h2 className="text-2xl font-medium text-foreground mb-1">
             {projectId ? 'Edit Project' : 'Create New Project'}
@@ -351,7 +354,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             Fill in the details below to {projectId ? 'update your' : 'create a new'} project
           </p>
         </div>
-        
+
         <FormField
           control={form.control}
           name="title"
@@ -359,10 +362,10 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             <FormItem>
               <FormLabel className="font-medium">Project Title</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="Enter project title" 
-                  {...field} 
-                  className="bg-muted/30 border-border focus-visible:ring-ring transition-all" 
+                <Input
+                  placeholder="Enter project title"
+                  {...field}
+                  className="bg-muted/30 border-border focus-visible:ring-ring transition-all"
                 />
               </FormControl>
               <FormMessage />
@@ -469,9 +472,10 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                 type="button"
                 variant={selectedCategories.includes(category) ? 'default' : 'outline'}
                 onClick={() => toggleCategory(category)}
-                className={selectedCategories.includes(category) 
-                  ? 'bg-primary text-primary-foreground shadow-sm transition-all' 
-                  : 'border-border hover:bg-accent hover:text-accent-foreground transition-all'
+                className={
+                  selectedCategories.includes(category)
+                    ? 'bg-primary text-primary-foreground shadow-sm transition-all'
+                    : 'border-border hover:bg-accent hover:text-accent-foreground transition-all'
                 }
                 size="sm"
               >
@@ -479,7 +483,9 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               </Button>
             ))}
           </div>
-          <p className="text-xs text-muted-foreground mt-1">Select at least one category that best describes your project</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Select at least one category that best describes your project
+          </p>
         </div>
 
         <div className="space-y-3">
@@ -509,7 +515,9 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                   <div className="mb-4 rounded-full bg-accent p-4">
                     <ImageIcon className="h-8 w-8 text-accent-foreground" />
                   </div>
-                  <p className="mb-2 text-sm font-medium text-foreground">Click to upload or drag and drop</p>
+                  <p className="mb-2 text-sm font-medium text-foreground">
+                    Click to upload or drag and drop
+                  </p>
                   <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (Max: 20MB)</p>
                   <Button
                     type="button"
@@ -558,7 +566,9 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
               </div>
             )}
           </div>
-          <p className="text-xs text-muted-foreground mt-1">Upload high-quality images to showcase your project</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Upload high-quality images to showcase your project
+          </p>
         </div>
 
         <div className="flex justify-end gap-4 pt-4 border-t border-border mt-8">
@@ -579,8 +589,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
           >
             Reset
           </Button>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={isSubmitting}
             className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-all"
           >

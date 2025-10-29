@@ -50,22 +50,40 @@ const Footer = () => {
         {/* Bottom: Quick Links */}
         <div className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-800">
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-            <a href="#home" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#home"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               Home
             </a>
-            <a href="#about" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#about"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               About
             </a>
-            <a href="#skills" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#skills"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               Skills
             </a>
-            <a href="#projects" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#projects"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               Projects
             </a>
-            <a href="#certificates" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#certificates"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               Certificates
             </a>
-            <a href="#contact" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+            <a
+              href="#contact"
+              className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
               Contact
             </a>
           </div>

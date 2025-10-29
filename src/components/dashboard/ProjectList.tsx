@@ -96,7 +96,10 @@ export default function ProjectList() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <span key={i} className={`text-lg ${i < rating ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}>
+      <span
+        key={i}
+        className={`text-lg ${i < rating ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+      >
         ★
       </span>
     ));
@@ -114,7 +117,12 @@ export default function ProjectList() {
     return (
       <div className="p-4 border border-destructive/50 rounded-lg bg-destructive/10 text-destructive dark:bg-red-900/20 dark:text-red-400">
         <p>{error}</p>
-        <Button variant="outline" size="sm" className="mt-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800" onClick={fetchProjects}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mt-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+          onClick={fetchProjects}
+        >
           Try Again
         </Button>
       </div>
@@ -135,7 +143,9 @@ export default function ProjectList() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Total Projects: {projects.length}</h2>
+        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+          Total Projects: {projects.length}
+        </h2>
         <Button
           variant="outline"
           size="sm"
@@ -164,7 +174,9 @@ export default function ProjectList() {
                   />
                 ) : (
                   <div className="rounded-lg bg-muted w-full h-40 flex items-center justify-center dark:bg-gray-700">
-                    <span className="text-muted-foreground text-sm dark:text-gray-400">No image</span>
+                    <span className="text-muted-foreground text-sm dark:text-gray-400">
+                      No image
+                    </span>
                   </div>
                 )}
               </div>
@@ -227,30 +239,35 @@ export default function ProjectList() {
           </div>
         ))}
       </div>
-      
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent className="dark:bg-gray-800 dark:border-gray-700">
           <DialogHeader>
             <DialogTitle className="dark:text-gray-100">Konfirmasi Penghapusan</DialogTitle>
             <DialogDescription className="dark:text-gray-400">
-              Are you sure you want to delete this project? Type &quot;confirm&quot; to delete this project.
+              Are you sure you want to delete this project? Type &quot;confirm&quot; to delete this
+              project.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Input
               placeholder="Type 'confirm' here"
               value={confirmText}
-              onChange={(e) => setConfirmText(e.target.value)}
+              onChange={e => setConfirmText(e.target.value)}
               className="mt-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-400"
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)} className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+              className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+            >
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
+            <Button
+              variant="destructive"
               onClick={handleDelete}
               disabled={confirmText !== 'confirm'}
             >
