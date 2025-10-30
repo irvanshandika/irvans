@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import React, { useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Button } from '@/src/components/ui/button';
 import {
@@ -12,10 +13,28 @@ import {
 } from '@/src/components/ui/dropdown-menu';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import { Moon, Sun, Computer } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Separator } from '@/src/components/ui/separator';
 
 export function UserAuthStatus() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
+
+  React.useEffect(() => {
+      setMounted(true);
+  }, []);
+
+  if (!mounted) {
+      return (
+        <Button variant="outline" size="icon">
+          <span className="h-[1.2rem] w-[1.2rem]" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      );
+    }
 
   if (isLoading) {
     return <div className="text-sm text-muted-foreground">Loading...</div>;
@@ -205,6 +224,36 @@ export function UserAuthStatus() {
             </svg>
             Logout
           </DropdownMenuItem>
+          <Separator className='my-1' />
+          <div className="flex items-center justify-between px-2 py-1.5">
+            <span className="text-xs text-muted-foreground">Theme</span>
+            <div className="flex gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => setTheme('light')}
+              >
+                <Sun className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => setTheme('dark')}
+              >
+                <Moon className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => setTheme('system')}
+              >
+                <Computer className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

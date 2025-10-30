@@ -48,7 +48,7 @@ const Certificates = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white border-gray-300 dark:border-slate-600 dark:text-gray-300 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
                   asChild
                 >
                   <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
