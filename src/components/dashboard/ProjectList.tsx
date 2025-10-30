@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from '@/src/components/ui/dialog';
 import { Input } from '@/src/components/ui/input';
+import { HtmlRenderer } from '@/src/components/ui/html-renderer';
 
 type Project = {
   id: string;
@@ -196,9 +197,9 @@ export default function ProjectList() {
                         </span>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2 dark:text-gray-400">
-                      {project.description}
-                    </p>
+                    <div className="text-sm text-muted-foreground mt-3 line-clamp-2 dark:text-gray-400">
+                      <HtmlRenderer html={project.description} />
+                    </div>
                   </div>
                   <div className="flex flex-col items-start sm:items-end">
                     <div className="flex">{renderStars(project.rating)}</div>

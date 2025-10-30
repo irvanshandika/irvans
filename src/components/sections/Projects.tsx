@@ -8,6 +8,7 @@ import { Badge } from '../ui/badge';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 import Link from 'next/link';
+import { HtmlRenderer } from '../ui/html-renderer';
 
 type Project = {
   id: string;
@@ -97,7 +98,7 @@ const Projects = () => {
                         <span className="text-slate-500 dark:text-gray-400">No Image</span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-slate-900 to-transparent opacity-60"></div>
                   </div>
 
                   <CardHeader>
@@ -106,9 +107,9 @@ const Projects = () => {
                     </CardTitle>
                   </CardHeader>
 
-                  <CardContent className="flex-grow">
+                  <CardContent className="grow">
                     <CardDescription className="text-slate-600 dark:text-gray-400 mb-4">
-                      {project.description}
+                      <HtmlRenderer html={project.description} />
                     </CardDescription>
 
                     {/* Categories */}
