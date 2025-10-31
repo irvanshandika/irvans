@@ -33,19 +33,6 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
-const CATEGORIES = [
-  'Web Development',
-  'Mobile App',
-  'UI/UX Design',
-  'Backend',
-  'Frontend',
-  'Full Stack',
-  'Machine Learning',
-  'Data Science',
-  'Game Development',
-  'DevOps',
-];
-
 type FormValues = {
   title: string;
   description: string;
@@ -71,6 +58,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     initialData?.categories || []
   );
+  const [categoryInput, setCategoryInput] = useState('');
   // Mengubah state imagePreview menjadi array untuk mendukung multiple images
   const [imagePreviews, setImagePreviews] = useState<
     Array<{ id: string; url: string; file: File | null }>
@@ -208,14 +196,19 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
     }
   };
 
-  const toggleCategory = (category: string) => {
-    setSelectedCategories(prev => {
-      if (prev.includes(category)) {
-        return prev.filter(c => c !== category);
-      } else {
-        return [...prev, category];
+  const handleCategoryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ',' || e.key === 'Enter') {
+      e.preventDefault();
+      const trimmed = categoryInput.trim();
+      if (trimmed && !selectedCategories.includes(trimmed)) {
+        setSelectedCategories(prev => [...prev, trimmed]);
+        setCategoryInput('');
       }
-    });
+    }
+  };
+
+  const removeCategory = (category: string) => {
+    setSelectedCategories(prev => prev.filter(c => c !== category));
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -223,7 +216,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       setIsSubmitting(true);
 
       if (selectedCategories.length === 0) {
-        toast.error('Please select at least one category');
+        toast.error('Please add at least one category');
         return;
       }
 
@@ -465,26 +458,32 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
 
         <div className="space-y-3">
           <Label className="font-medium">Categories</Label>
+          <Input
+            placeholder="Type a category and press , or Enter"
+            value={categoryInput}
+            onChange={e => setCategoryInput(e.target.value)}
+            onKeyDown={handleCategoryKeyDown}
+            className="bg-muted/30 border-border focus-visible:ring-ring transition-all"
+          />
           <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map(category => (
-              <Button
+            {selectedCategories.map(category => (
+              <span
                 key={category}
-                type="button"
-                variant={selectedCategories.includes(category) ? 'default' : 'outline'}
-                onClick={() => toggleCategory(category)}
-                className={
-                  selectedCategories.includes(category)
-                    ? 'bg-primary text-primary-foreground shadow-sm transition-all'
-                    : 'border-border hover:bg-accent hover:text-accent-foreground transition-all'
-                }
-                size="sm"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-primary text-primary-foreground"
               >
                 {category}
-              </Button>
+                <button
+                  type="button"
+                  onClick={() => removeCategory(category)}
+                  className="text-primary-foreground/80 hover:text-primary-foreground"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
             ))}
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            Select at least one category that best describes your project
+            Add at least one category that best describes your project
           </p>
         </div>
 
