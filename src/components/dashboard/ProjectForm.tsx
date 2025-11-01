@@ -37,6 +37,8 @@ type FormValues = {
   title: string;
   description: string;
   categories: string[];
+  demoUrl: string;
+  githubUrl: string;
   code?: string;
   image?: FileList;
 };
@@ -48,6 +50,8 @@ type ProjectFormProps = {
     title: string;
     description: string;
     categories: string[];
+    demoUrl: string;
+    githubUrl: string;
     code: string;
     imageUrl?: string;
   };
@@ -92,6 +96,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       title: initialData?.title || '',
       description: initialData?.description || '',
       categories: initialData?.categories || [],
+      demoUrl: initialData?.demoUrl || '',
+      githubUrl: initialData?.githubUrl || '',
       code: initialData?.code || '',
     },
     mode: 'onChange',
@@ -281,6 +287,8 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
       const projectData = {
         title: data.title,
         description: data.description,
+        demoUrl: data.demoUrl,
+        githubUrl: data.githubUrl,
         categories: selectedCategories,
         code: data.code,
         imageUrls: imageUrls.length > 0 ? imageUrls : null,
@@ -486,6 +494,42 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             Add at least one category that best describes your project
           </p>
         </div>
+
+        <FormField
+          control={form.control}
+          name="demoUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium">Demo URL</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter demo URL"
+                  {...field}
+                  className="bg-muted/30 border-border focus-visible:ring-ring transition-all"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="githubUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium">Github URL</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter Github URL"
+                  {...field}
+                  className="bg-muted/30 border-border focus-visible:ring-ring transition-all"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="space-y-3">
           <Label className="font-medium">Project Image</Label>
