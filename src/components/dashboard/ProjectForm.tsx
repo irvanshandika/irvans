@@ -512,7 +512,7 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="githubUrl"

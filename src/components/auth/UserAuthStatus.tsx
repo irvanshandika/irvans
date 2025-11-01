@@ -25,17 +25,17 @@ export function UserAuthStatus() {
   const isLoading = status === 'loading';
 
   React.useEffect(() => {
-      setMounted(true);
+    setMounted(true);
   }, []);
 
   if (!mounted) {
-      return (
-        <Button variant="outline" size="icon">
-          <span className="h-[1.2rem] w-[1.2rem]" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      );
-    }
+    return (
+      <Button variant="outline" size="icon">
+        <span className="h-[1.2rem] w-[1.2rem]" />
+        <span className="sr-only">Toggle theme</span>
+      </Button>
+    );
+  }
 
   if (isLoading) {
     return <div className="text-sm text-muted-foreground">Loading...</div>;
@@ -225,7 +225,7 @@ export function UserAuthStatus() {
             </svg>
             Logout
           </DropdownMenuItem>
-          <Separator className='my-1' />
+          <Separator className="my-1" />
           <div className="flex items-center justify-between px-2 py-1.5">
             <span className="text-xs text-muted-foreground">Theme</span>
             <div className="flex gap-1">

@@ -41,21 +41,12 @@ const Certificates = () => {
                   {cert.title}
                 </CardTitle>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{cert.issuer}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{cert.date}</p>
               </CardHeader>
 
               <CardFooter>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white border-gray-300 dark:border-slate-600 dark:text-gray-300 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
-                  asChild
-                >
-                  <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View Credential
-                  </a>
-                </Button>
+                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                  Certified {cert.date}
+                </p>
               </CardFooter>
             </Card>
           ))}

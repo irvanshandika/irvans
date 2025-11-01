@@ -2,7 +2,6 @@
 import ProjectForm from '@/src/components/dashboard/ProjectForm';
 import { Toaster } from 'react-hot-toast';
 
-
 export default function CreateProjectPage() {
   return (
     <>
