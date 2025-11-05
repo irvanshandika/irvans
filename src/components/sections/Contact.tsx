@@ -39,14 +39,14 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email',
-      value: 'irvan@example.com',
-      link: 'mailto:irvan@example.com',
+      value: 'contact@irvans.my.id',
+      link: 'mailto:contact@irvans.my.id',
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Phone',
-      value: '+62 123 4567 8900',
-      link: 'tel:+6212345678900',
+      value: '+625845561655',
+      link: 'https://wa.me/625845561655',
     },
     {
       icon: <MapPin className="h-6 w-6" />,
@@ -63,7 +63,7 @@ const Contact = () => {
           <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             Get In Touch
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4"></div>
+          <div className="w-20 h-1 bg-linear-to-r from-blue-500 to-cyan-500 mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach out!
           </p>
@@ -79,7 +79,7 @@ const Contact = () => {
               >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 text-blue-600 dark:text-blue-400">
+                    <div className="shrink-0 text-blue-600 dark:text-blue-400">
                       {info.icon}
                     </div>
                     <div>
@@ -89,6 +89,8 @@ const Contact = () => {
                       {info.link ? (
                         <a
                           href={info.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-slate-700 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                           {info.value}
@@ -113,7 +115,7 @@ const Contact = () => {
                       htmlFor="name"
                       className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
                     >
-                      Your Name
+                      Name
                     </label>
                     <Input
                       id="name"
@@ -132,7 +134,7 @@ const Contact = () => {
                       htmlFor="email"
                       className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
                     >
-                      Your Email
+                      Email
                     </label>
                     <Input
                       id="email"
@@ -151,7 +153,7 @@ const Contact = () => {
                       htmlFor="message"
                       className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
                     >
-                      Your Message
+                      Message
                     </label>
                     <Textarea
                       id="message"

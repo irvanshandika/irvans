@@ -97,8 +97,8 @@ const data = {
   ],
   navSecondary: [
     {
-      title: 'Settings',
-      url: '/dashboard/profile',
+      title: 'Profile',
+      url: '/profile',
       icon: IconSettings,
     },
     {

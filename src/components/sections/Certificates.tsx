@@ -1,8 +1,7 @@
 import React from 'react';
 import { mockCertificates } from './mock';
-import { ExternalLink, Award } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { Card, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { Button } from '../ui/button';
 import Image from 'next/image';
 
 const Certificates = () => {
