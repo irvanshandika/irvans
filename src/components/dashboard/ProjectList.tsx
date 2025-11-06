@@ -22,7 +22,7 @@ type Project = {
   description: string;
   imageUrl?: string | null;
   categories: string[];
-  rating: number;
+
   createdAt: Date;
   updatedAt: Date;
 };
@@ -95,16 +95,7 @@ export default function ProjectList() {
     return format(new Date(dateString), 'MMM dd, yyyy');
   };
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <span
-        key={i}
-        className={`text-lg ${i < rating ? 'text-yellow-500 dark:text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
-      >
-        ★
-      </span>
-    ));
-  };
+
 
   if (loading) {
     return (
@@ -202,7 +193,7 @@ export default function ProjectList() {
                     </div>
                   </div>
                   <div className="flex flex-col items-start sm:items-end">
-                    <div className="flex">{renderStars(project.rating)}</div>
+
                     <div className="flex flex-col items-end mt-1 space-y-1">
                       <span className="text-xs text-muted-foreground dark:text-gray-500">
                         Created: {formatDate(project.createdAt)}

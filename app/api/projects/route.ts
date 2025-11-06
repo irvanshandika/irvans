@@ -22,8 +22,7 @@ export async function GET(req: NextRequest) {
         demoUrl: true,
         githubUrl: true,
         categories: true,
-        rating: true,
-        ratingCount: true,
+
         createdAt: true,
         updatedAt: true,
       },

@@ -10,7 +10,7 @@ import { SectionCards } from '@/src/components/section-cards';
 
 // Import komponen dashboard kustom
 import { UserChart } from '@/src/components/dashboard/UserChart';
-import { ProjectRatingChart } from '@/src/components/dashboard/ProjectRatingChart';
+
 import ProjectList from '@/src/components/dashboard/ProjectList';
 
 // Komponen loading untuk Suspense
@@ -56,12 +56,7 @@ export default function DashboardMain() {
               </Suspense>
             </div>
 
-            <div className="bg-card rounded-xl border shadow-sm p-4">
-              <h2 className="text-xl font-semibold mb-4">Grafik Rating Proyek</h2>
-              <Suspense fallback={<LoadingComponent />}>
-                <ProjectRatingChart />
-              </Suspense>
-            </div>
+
           </div>
 
           <div className="px-4 lg:px-6">

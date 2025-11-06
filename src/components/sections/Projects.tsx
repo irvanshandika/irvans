@@ -19,8 +19,7 @@ type Project = {
   githubUrl?: string | null;
   categories: string[];
   code?: string | null;
-  rating: number;
-  ratingCount: number;
+
   createdAt: Date;
   updatedAt: Date;
 };
@@ -126,11 +125,7 @@ const Projects = () => {
                         ))}
                     </div>
 
-                    {/* Rating */}
-                    <div className="text-sm text-slate-600 dark:text-gray-400 mt-2">
-                      <span className="text-yellow-500">★</span> {project.rating.toFixed(1)} (
-                      {project.ratingCount} reviews)
-                    </div>
+
                   </CardContent>
 
                   <CardFooter className="flex gap-3">
