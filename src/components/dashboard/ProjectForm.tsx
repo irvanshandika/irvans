@@ -446,6 +446,42 @@ export default function ProjectForm({ onSuccess, projectId, initialData }: Proje
                     >
                       <Heading2 className="h-4 w-4" />
                     </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleBulletList().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('bulletList') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
+                    >
+                      <List className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('orderedList') ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
+                    >
+                      <ListOrdered className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 1 }) ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
+                    >
+                      <Heading1 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
+                      className={`rounded-md transition-colors ${editor?.isActive('heading', { level: 2 }) ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 hover:text-accent-foreground'}`}
+                    >
+                      <Heading2 className="h-4 w-4" />
+                    </Button>
                   </div>
                   <EditorContent
                     editor={editor}

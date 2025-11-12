@@ -148,6 +148,7 @@ export default function ProfileMain() {
                       onClick={() => setIsEditing(true)}
                       variant="outline" 
                       size="sm"
+                      aria-label="Ubah informasi profil"
                       className="border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-200"
                     >
                       <Edit3 className="w-4 h-4 mr-2" />
@@ -243,6 +244,7 @@ export default function ProfileMain() {
                           <Button 
                             type="submit" 
                             disabled={isSaving}
+                            aria-label="Simpan perubahan profil"
                             className="bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white transition-colors duration-200"
                           >
                             {isSaving ? (
@@ -264,7 +266,7 @@ export default function ProfileMain() {
                               setIsEditing(false);
                               setErrors({});
                             }}
-                            disabled={isSaving}
+                            aria-label="Batalkan perubahan profil"
                             className="border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-200"
                           >
                             <X className="w-4 h-4 mr-2" />

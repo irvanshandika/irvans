@@ -57,6 +57,7 @@ const Navbar = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
+                aria-label={`Navigasi ke bagian ${item.label}`}
                 className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200 text-sm font-medium"
               >
                 {item.label}
@@ -74,6 +75,7 @@ const Navbar = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
               className="text-gray-700 dark:text-gray-300"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -88,7 +90,8 @@ const Navbar = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200 text-left py-2 px-4 rounded hover:bg-blue-50 dark:hover:bg-slate-800"
+                  aria-label={`Navigasi ke bagian ${item.label}`}
+                  className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200 py-2 text-left"
                 >
                   {item.label}
                 </button>

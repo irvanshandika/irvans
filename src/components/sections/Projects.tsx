@@ -133,6 +133,7 @@ const Projects = () => {
                       <Button
                         variant="outline"
                         size="sm"
+                        aria-label={`Lihat kode proyek ${project.title}`}
                         className="flex-1 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
                         asChild
                       >
@@ -145,6 +146,7 @@ const Projects = () => {
                     {project.demoUrl && (
                       <Button
                         size="sm"
+                        aria-label={`Lihat demo proyek ${project.title}`}
                         className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                         asChild
                       >

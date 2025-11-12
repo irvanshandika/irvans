@@ -41,12 +41,14 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={() => scrollToSection('projects')}
+              aria-label="Lihat hasil kerja saya"
               className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-8 py-6 text-lg rounded-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
             >
               View My Work
             </Button>
             <Button
               onClick={() => scrollToSection('contact')}
+              aria-label="Hubungi saya"
               variant="outline"
               className="border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white dark:hover:text-white px-8 py-6 text-lg rounded-lg transition-all duration-300 hover:scale-105"
             >

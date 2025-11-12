@@ -170,6 +170,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
+                    aria-label="Kirim pesan kontak"
                     className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
                   >
                     {isSubmitting ? (
