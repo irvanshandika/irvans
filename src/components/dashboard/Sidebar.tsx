@@ -66,6 +66,7 @@ export default function Sidebar() {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
+                    aria-label={item.name}
                     className={cn(
                       'flex items-center gap-3 px-3 py-2 rounded-md transition-colors',
                       pathname === item.href
@@ -94,6 +95,7 @@ export default function Sidebar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  aria-label={item.name}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2 rounded-md transition-colors',
                     pathname === item.href

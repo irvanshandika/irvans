@@ -137,7 +137,7 @@ const Projects = () => {
                         className="flex-1 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
                         asChild
                       >
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View source code for ${project.title}`}>
                           <Github className="h-4 w-4 mr-2" />
                           Code
                         </a>
@@ -150,7 +150,7 @@ const Projects = () => {
                         className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                         asChild
                       >
-                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`View live demo for ${project.title}`}>
                           <ExternalLink className="h-4 w-4 mr-2" />
                           Demo
                         </a>

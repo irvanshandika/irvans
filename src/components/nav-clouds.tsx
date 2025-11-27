@@ -50,7 +50,7 @@ export function NavClouds({
                           tooltip={subItem.title}
                           className={pathname === subItem.url ? 'bg-muted' : ''}
                         >
-                          <Link href={subItem.url}>
+                          <Link href={subItem.url} aria-label={subItem.title}>
                             <span
                               className={pathname === subItem.url ? 'font-medium text-primary' : ''}
                             >
@@ -74,7 +74,7 @@ export function NavClouds({
                     pathname === item.url || pathname.startsWith(item.url) ? 'bg-muted' : ''
                   }
                 >
-                  <Link href={item.url}>
+                  <Link href={item.url} aria-label={item.title}>
                     {item.icon && (
                       <item.icon
                         className={

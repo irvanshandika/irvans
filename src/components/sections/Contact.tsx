@@ -92,6 +92,7 @@ const Contact = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-slate-700 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          aria-label={`Contact via ${info.title}`}
                         >
                           {info.value}
                         </a>

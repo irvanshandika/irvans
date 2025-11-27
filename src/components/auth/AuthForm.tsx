@@ -186,7 +186,11 @@ export function AuthForm({
       <CardFooter className="flex justify-center">
         <div className="text-sm text-gray-600 dark:text-gray-400">
           {footerText}{' '}
-          <a href={footerLinkHref} className="text-blue-600 hover:underline dark:text-blue-400">
+          <a
+            href={footerLinkHref}
+            className="text-blue-600 hover:underline dark:text-blue-400"
+            aria-label={footerLinkText}
+          >
             {footerLinkText}
           </a>
         </div>

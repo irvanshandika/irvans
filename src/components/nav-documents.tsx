@@ -43,7 +43,7 @@ export function NavDocuments({
               asChild
               className={pathname === item.url || pathname.startsWith(item.url) ? 'bg-muted' : ''}
             >
-              <Link href={item.url}>
+              <Link href={item.url} aria-label={item.name}>
                 <item.icon
                   className={
                     pathname === item.url || pathname.startsWith(item.url) ? 'text-primary' : ''

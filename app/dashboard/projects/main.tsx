@@ -17,7 +17,7 @@ export default function ProjectsMain() {
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
             <Button asChild>
-              <Link href="/dashboard/projects/create">
+              <Link href="/dashboard/projects/create" aria-label="Create New Project">
                 <Plus className="h-5 w-5 mr-2" />
                 Create New Project
               </Link>

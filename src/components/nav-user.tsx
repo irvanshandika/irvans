@@ -47,7 +47,7 @@ export function NavUser({ user: propUser }: NavUserProps) {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
-            <a href="/auth/login" className="flex items-center gap-2">
+            <a href="/auth/login" className="flex items-center gap-2" aria-label="Login">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">?</AvatarFallback>
               </Avatar>

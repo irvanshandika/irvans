@@ -60,7 +60,7 @@ export function NavMain({
                   tooltip={item.title}
                   className={isActive ? 'bg-muted' : ''}
                 >
-                  <Link href={item.url}>
+                  <Link href={item.url} aria-label={item.title}>
                     {item.icon && <item.icon className={isActive ? 'text-primary' : ''} />}
                     <span className={isActive ? 'font-medium text-primary' : ''}>{item.title}</span>
                   </Link>

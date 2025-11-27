@@ -44,12 +44,12 @@ export function UserAuthStatus() {
   if (!session) {
     return (
       <div className="flex gap-2">
-        <Link href="/auth/login">
+        <Link href="/auth/login" aria-label="Login">
           <Button variant="outline" size="sm">
             Login
           </Button>
         </Link>
-        <Link href="/auth/register">
+        <Link href="/auth/register" aria-label="Register">
           <Button size="sm">Register</Button>
         </Link>
       </div>
@@ -120,7 +120,7 @@ export function UserAuthStatus() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/dashboard" className="cursor-pointer flex items-center">
+            <Link href="/dashboard" className="cursor-pointer flex items-center" aria-label="Go to Dashboard">
               <svg
                 width="16"
                 height="16"
@@ -162,7 +162,7 @@ export function UserAuthStatus() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile" className="cursor-pointer flex items-center">
+            <Link href="/profile" className="cursor-pointer flex items-center" aria-label="Go to Profile">
               <svg
                 width="16"
                 height="16"

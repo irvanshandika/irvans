@@ -63,6 +63,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              aria-label="GitHub Profile"
             >
               <Github className="h-6 w-6" />
             </a>
@@ -71,12 +72,14 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              aria-label="LinkedIn Profile"
             >
               <Linkedin className="h-6 w-6" />
             </a>
             <a
               href="mailto:irvan@example.com"
               className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              aria-label="Email Me"
             >
               <Mail className="h-6 w-6" />
             </a>

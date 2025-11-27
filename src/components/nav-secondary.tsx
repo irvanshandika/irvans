@@ -35,7 +35,7 @@ export function NavSecondary({
                 asChild
                 className={pathname === item.url || pathname.startsWith(item.url) ? 'bg-muted' : ''}
               >
-                <Link href={item.url}>
+                <Link href={item.url} aria-label={item.title}>
                   <item.icon
                     className={
                       pathname === item.url || pathname.startsWith(item.url) ? 'text-primary' : ''
