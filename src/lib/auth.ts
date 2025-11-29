@@ -1,9 +1,7 @@
 'use server';
 
 import { hash } from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from './prisma';
 
 export interface RegisterFormData {
   name: string;
