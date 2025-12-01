@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/src/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-
-const prisma = new PrismaClient();
+import { authOptions } from '@/src/lib/authOptions';
 
 export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
@@ -39,7 +37,5 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
   } catch (error) {
     console.error('Error updating user role:', error);
     return NextResponse.json({ error: 'Failed to update user role' }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

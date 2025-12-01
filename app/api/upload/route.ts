@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/src/lib/authOptions';
 import { uploadImageToCloudinary } from '@/src/lib/cloudinary';
 import { v4 as uuidv4 } from 'uuid';
 
