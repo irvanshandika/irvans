@@ -1,36 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import React, { useState, useEffect } from 'react';
-import { Mail, MapPin, Phone, Send, LogIn, UserPlus } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { Card, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { toast } from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 const Contact = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Auto-fill name and email when user is logged in
-  useEffect(() => {
-    if (session?.user) {
-      setFormData((prev) => ({
-        ...prev,
-        name: session.user.name || '',
-        email: session.user.email || '',
-      }));
-    }
-  }, [session]);
 
   const handleChange = (e: any) => {
     setFormData({
@@ -43,42 +27,12 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch('/api/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        toast.success('Message Sent! Thank you for reaching out. I will get back to you soon.');
-        // Reset only subject and message if user is logged in
-        if (session?.user) {
-          setFormData((prev) => ({ ...prev, subject: '', message: '' }));
-        } else {
-          setFormData({ name: '', email: '', subject: '', message: '' });
-        }
-      } else {
-        toast.error(data.message || 'Failed to send message. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      toast.error('An error occurred. Please try again later.');
-    } finally {
+    // Simulate form submission (mock)
+    setTimeout(() => {
+      toast.success('Message Sent! Thank you for reaching out. I will get back to you soon.');
+      setFormData({ name: '', email: '', message: '' });
       setIsSubmitting(false);
-    }
-  };
-
-  const handleLoginClick = () => {
-    router.push('/auth/login');
-  };
-
-  const handleRegisterClick = () => {
-    router.push('/auth/register');
+    }, 1000);
   };
 
   const contactInfo = [
@@ -101,8 +55,6 @@ const Contact = () => {
       link: null,
     },
   ];
-
-  const isLoggedIn = status === 'authenticated';
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
@@ -173,8 +125,7 @@ const Contact = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      disabled={isLoggedIn}
-                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500"
                       placeholder="John Doe"
                     />
                   </div>
@@ -193,28 +144,8 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      disabled={isLoggedIn}
-                      className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
-                    >
-                      Subject
-                    </label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      type="text"
-                      required
-                      value={formData.subject}
-                      onChange={handleChange}
                       className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500"
-                      placeholder="Project Inquiry"
+                      placeholder="john@example.com"
                     />
                   </div>
 
@@ -237,45 +168,21 @@ const Contact = () => {
                     />
                   </div>
 
-                  {/* Conditional Buttons */}
-                  {isLoggedIn ? (
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      aria-label="Kirim pesan kontak"
-                      className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
-                    >
-                      {isSubmitting ? (
-                        <>Sending...</>
-                      ) : (
-                        <>
-                          <Send className="h-5 w-5 mr-2" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  ) : (
-                    <div className="grid grid-cols-2 gap-4">
-                      <Button
-                        type="button"
-                        onClick={handleLoginClick}
-                        aria-label="Login untuk mengirim pesan"
-                        className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
-                      >
-                        <LogIn className="h-5 w-5 mr-2" />
-                        Login
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={handleRegisterClick}
-                        aria-label="Register untuk mengirim pesan"
-                        className="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-green-600/50 dark:shadow-green-500/50"
-                      >
-                        <UserPlus className="h-5 w-5 mr-2" />
-                        Register
-                      </Button>
-                    </div>
-                  )}
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    aria-label="Kirim pesan kontak"
+                    className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-6 text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
+                  >
+                    {isSubmitting ? (
+                      <>Sending...</>
+                    ) : (
+                      <>
+                        <Send className="h-5 w-5 mr-2" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
                 </form>
               </CardContent>
             </Card>

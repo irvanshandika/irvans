@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/src/lib/authOptions';
-import prisma from '@/src/lib/prisma';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { PrismaClient } from '@prisma/client';
 import { deleteImageFromCloudinary, getPublicIdFromUrl } from '@/src/lib/cloudinary';
+
+const prisma = new PrismaClient();
 
 // GET a single project by ID
 export async function GET(req: NextRequest, context: { params: Promise<{ id: string }> }) {

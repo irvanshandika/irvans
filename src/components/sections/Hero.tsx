@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
 import { Button } from '../ui/button';
 
 const Hero = () => {
@@ -14,35 +14,45 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 bg-white dark:bg-gray-900"
+      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-16 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto w-full text-center">
-        <div className="space-y-8 animate-fade-in">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-background dark:from-purple-950/20 dark:via-pink-950/10 dark:to-background -z-10" />
+      
+      {/* Floating orbs for visual interest */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 dark:bg-purple-800/20 rounded-full blur-3xl animate-float -z-10" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-200/30 dark:bg-pink-800/20 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }} />
+
+      <div className="max-w-5xl mx-auto w-full">
+        <div className="space-y-12 animate-fade-in text-center">
           {/* Greeting */}
-          <div className="space-y-4">
-            <p className="text-blue-600 dark:text-blue-400 text-xl sm:text-2xl font-medium">
+          <div className="space-y-6">
+            <p className="text-muted-foreground text-base sm:text-lg font-light tracking-wide uppercase">
               Hello, I&apos;m
             </p>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-gray-900 dark:text-white drop-shadow-2xl">
+            
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold gradient-text leading-tight">
               Irvan
             </h1>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-blue-600 dark:text-cyan-400 drop-shadow-lg">
+            
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-foreground/80 tracking-wide">
               Full-Stack Web Developer
             </h2>
           </div>
 
           {/* Description */}
-          <p className="text-gray-700 dark:text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-light">
             I build robust and scalable web applications, always eager to learn and implement new
             technologies while ensuring clean, maintainable code.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Button
               onClick={() => scrollToSection('projects')}
               aria-label="Lihat hasil kerja saya"
-              className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-8 py-6 text-lg rounded-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-600/50 dark:shadow-blue-500/50"
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-base rounded-2xl transition-smooth hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
             >
               View My Work
             </Button>
@@ -50,7 +60,8 @@ const Hero = () => {
               onClick={() => scrollToSection('contact')}
               aria-label="Hubungi saya"
               variant="outline"
-              className="border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white dark:hover:text-white px-8 py-6 text-lg rounded-lg transition-all duration-300 hover:scale-105"
+              size="lg"
+              className="border-2 border-border hover:border-primary text-foreground hover:text-primary px-8 py-6 text-base rounded-2xl transition-smooth hover:scale-105"
             >
               Get In Touch
             </Button>
@@ -62,34 +73,39 @@ const Hero = () => {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              className="group p-3 rounded-full bg-secondary/50 hover:bg-primary/10 transition-smooth hover:scale-110"
               aria-label="GitHub Profile"
             >
-              <Github className="h-6 w-6" />
+              <Github className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              className="group p-3 rounded-full bg-secondary/50 hover:bg-primary/10 transition-smooth hover:scale-110"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin className="h-6 w-6" />
+              <Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </a>
             <a
               href="mailto:irvan@example.com"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-110 transform"
+              className="group p-3 rounded-full bg-secondary/50 hover:bg-primary/10 transition-smooth hover:scale-110"
               aria-label="Email Me"
             >
-              <Mail className="h-6 w-6" />
+              <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </a>
           </div>
 
           {/* Scroll Indicator */}
-          <div className="pt-12 animate-bounce">
-            <div className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full mx-auto flex items-start justify-center p-2">
-              <div className="w-1 h-3 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
-            </div>
+          <div className="pt-16 animate-bounce">
+            <button
+              onClick={() => scrollToSection('about')}
+              className="group flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Scroll to next section"
+            >
+              <span className="text-xs font-light tracking-widest uppercase">Scroll</span>
+              <ArrowDown className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>

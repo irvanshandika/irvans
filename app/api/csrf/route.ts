@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 import { randomBytes } from 'crypto';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/src/lib/authOptions';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 // Fungsi untuk menghasilkan token CSRF
 function generateCSRFToken() {

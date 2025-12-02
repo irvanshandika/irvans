@@ -35,9 +35,9 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/80 dark:bg-slate-950/80 backdrop-blur-md shadow-md'
+          ? 'glass shadow-sm'
           : 'bg-transparent'
       }`}
     >
@@ -45,20 +45,20 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="shrink-0">
             <h1
-              className="text-2xl font-bold bg-linear-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent cursor-pointer"
+              className="text-2xl font-bold gradient-text cursor-pointer"
               onClick={() => scrollToSection('home')}
             >
               Irvan
             </h1>
           </div>
 
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-1">
             {navItems.map(item => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 aria-label={`Navigasi ke bagian ${item.label}`}
-                className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200 text-sm font-medium"
+                className="px-4 py-2 text-sm font-light text-muted-foreground hover:text-primary transition-smooth rounded-lg hover:bg-secondary/50"
               >
                 {item.label}
               </button>
@@ -76,22 +76,22 @@ const Navbar = () => {
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-              className="text-gray-700 dark:text-gray-300"
+              className="text-foreground hover:text-primary"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden pb-4">
-            <nav className="flex flex-col space-y-2">
+          <div className="md:hidden pb-4 animate-slide-up">
+            <nav className="flex flex-col space-y-1">
               {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   aria-label={`Navigasi ke bagian ${item.label}`}
-                  className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200 py-2 text-left"
+                  className="text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-smooth py-3 px-4 text-left rounded-lg"
                 >
                   {item.label}
                 </button>
