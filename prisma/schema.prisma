@@ -22,6 +22,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
+  messages      Message[]
 }
 
 model Account {
@@ -70,10 +71,19 @@ model Project {
   categories  String[]
   code        String?
 
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accountId   String?
-  account     Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId String?
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
