@@ -12,6 +12,7 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
+  IconMail,
   IconReport,
   IconSearch,
   IconSettings,
@@ -40,6 +41,11 @@ const data = {
       title: 'Dashboard',
       url: '/dashboard',
       icon: IconDashboard,
+    },
+    {
+      title: 'Messages',
+      url: '/dashboard/messages',
+      icon: IconMail,
     },
     {
       title: 'Projects',
@@ -107,23 +113,6 @@ const data = {
       icon: IconHelp,
     },
   ],
-  documents: [
-    {
-      name: 'Documentation',
-      url: '/documentation',
-      icon: IconFileDescription,
-    },
-    {
-      name: 'API Reference',
-      url: '/api-reference',
-      icon: IconFileWord,
-    },
-    {
-      name: 'Resources',
-      url: '/resources',
-      icon: IconDatabase,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -144,7 +133,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavClouds items={data.navClouds} />
-        <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
