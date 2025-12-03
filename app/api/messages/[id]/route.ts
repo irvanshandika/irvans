@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 // GET - Fetch single message by ID
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -19,9 +19,11 @@ export async function GET(
       );
     }
 
+    const { id } = await params;
+
     const message = await prisma.message.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
       include: {
         user: {
@@ -63,7 +65,7 @@ export async function GET(
 // DELETE - Delete message by ID
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -75,10 +77,12 @@ export async function DELETE(
       );
     }
 
+    const { id } = await params;
+
     // Check if message exists
     const message = await prisma.message.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
@@ -92,7 +96,7 @@ export async function DELETE(
     // Delete the message
     await prisma.message.delete({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
