@@ -72,8 +72,8 @@ const Footer = () => {
     },
     {
       icon: Phone,
-      text: '+62 584 556 1655',
-      href: 'tel:+625845561655',
+      text: '+62 858 4556 1655',
+      href: 'tel:+6285845561655',
     },
     {
       icon: Mail,
