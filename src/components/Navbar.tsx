@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Code2, Sparkles } from 'lucide-react';
+import { Menu, X, Code2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { UserAuthStatus } from '@/src/components/auth/UserAuthStatus';
 
