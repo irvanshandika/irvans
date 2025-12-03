@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Get message content from request body
-    const { message } = await req.json();
+    const { message, subject } = await req.json();
 
     if (!message || message.trim() === '') {
       return NextResponse.json(
@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
     // Create message in database
     const newMessage = await prisma.message.create({
       data: {
+        subject: subject,
         content: message,
         userId: user.id,
       },

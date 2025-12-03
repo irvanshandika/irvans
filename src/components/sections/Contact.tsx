@@ -16,6 +16,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +39,7 @@ const Contact = () => {
   }, [session]);
 
   const handleChange = (e: any) => {
-    // Only allow message field to be edited when logged in
+    // Only prevent editing name and email fields when logged in
     if (session?.user && (e.target.name === 'name' || e.target.name === 'email')) {
       return;
     }
@@ -58,6 +59,11 @@ const Contact = () => {
       return;
     }
 
+    if (!formData.subject.trim()) {
+      toast.error('Subject tidak boleh kosong');
+      return;
+    }
+
     if (!formData.message.trim()) {
       toast.error('Pesan tidak boleh kosong');
       return;
@@ -72,6 +78,7 @@ const Contact = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          subject: formData.subject,
           message: formData.message,
         }),
       });
@@ -80,7 +87,7 @@ const Contact = () => {
 
       if (data.success) {
         toast.success('Pesan berhasil dikirim! Terima kasih telah menghubungi saya.');
-        setFormData((prev) => ({ ...prev, message: '' }));
+        setFormData((prev) => ({ ...prev, subject: '', message: '' }));
       } else {
         toast.error(data.message || 'Gagal mengirim pesan');
       }
@@ -217,6 +224,32 @@ const Contact = () => {
                         session?.user ? 'cursor-not-allowed opacity-70' : ''
                       }`}
                       placeholder={session?.user ? formData.email : 'Login untuk mengirim pesan'}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2"
+                    >
+                      Subject
+                    </label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      type="text"
+                      required
+                      value={formData.subject}
+                      onChange={handleChange}
+                      disabled={status === 'loading' || !session?.user}
+                      className={`bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-500 focus:border-blue-500 dark:focus:border-blue-500 ${
+                        !session?.user ? 'cursor-not-allowed opacity-70' : ''
+                      }`}
+                      placeholder={
+                        session?.user
+                          ? 'Tell me about your subject...'
+                          : 'Please log in first to send a message'
+                      }
                     />
                   </div>
 

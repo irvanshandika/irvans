@@ -97,7 +97,7 @@ const Hero = () => {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="pt-16 animate-bounce">
+          <div className="pt-16 animate-bounce flex justify-center">
             <button
               onClick={() => scrollToSection('about')}
               className="group flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
