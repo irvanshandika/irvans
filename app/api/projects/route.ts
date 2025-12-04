@@ -57,6 +57,8 @@ export async function POST(req: NextRequest) {
         title: data.title,
         description: data.description,
         imageUrl: data.imageUrls && data.imageUrls.length > 0 ? data.imageUrls[0] : null,
+        demoUrl: data.demoUrl || null,
+        githubUrl: data.githubUrl || null,
         categories: data.categories || [],
         code: data.code || null,
         userId: session.user.id as string,
