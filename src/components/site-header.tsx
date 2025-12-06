@@ -1,7 +1,10 @@
+'use client';
+
 import { useSession } from 'next-auth/react';
 import { Separator } from '@/src/components/ui/separator';
 import { SidebarTrigger } from '@/src/components/ui/sidebar';
 import ModeToggle from '@/src/components/ModeToggle';
+import NotificationDropdown from '@/src/components/notifications/NotificationDropdown';
 
 export function SiteHeader() {
   const { data: session } = useSession();
@@ -18,6 +21,7 @@ export function SiteHeader() {
               Welcome Back {session.user.name} !
             </span>
           )}
+          <NotificationDropdown />
           <ModeToggle />
         </div>
       </div>

@@ -12,10 +12,19 @@ import {
   ChevronRight,
   Search,
   Star,
+  AlertTriangle,
 } from 'lucide-react';
 import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Checkbox } from '@/src/components/ui/checkbox';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/src/components/ui/dialog';
 import { toast } from 'react-hot-toast';
 import { formatDistanceToNow } from 'date-fns';
 import { id as idLocale } from 'date-fns/locale';
@@ -40,6 +49,7 @@ export default function MessagesList() {
   const [selectedMessages, setSelectedMessages] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const messagesPerPage = 25;
 
   // Fetch messages
@@ -88,16 +98,15 @@ export default function MessagesList() {
   };
 
   // Handle delete selected messages
-  const handleDeleteSelected = async () => {
+  const handleDeleteClick = () => {
     if (selectedMessages.size === 0) {
       toast.error('Pilih pesan yang ingin dihapus');
       return;
     }
+    setShowDeleteDialog(true);
+  };
 
-    if (!confirm(`Hapus ${selectedMessages.size} pesan?`)) {
-      return;
-    }
-
+  const handleConfirmDelete = async () => {
     try {
       const deletePromises = Array.from(selectedMessages).map((id) =>
         fetch(`/api/messages/${id}`, { method: 'DELETE' })
@@ -107,6 +116,7 @@ export default function MessagesList() {
 
       toast.success(`${selectedMessages.size} pesan berhasil dihapus`);
       setSelectedMessages(new Set());
+      setShowDeleteDialog(false);
       fetchMessages();
     } catch (error) {
       console.error('Error deleting messages:', error);
@@ -205,7 +215,7 @@ export default function MessagesList() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleDeleteSelected}
+              onClick={handleDeleteClick}
               disabled={selectedMessages.size === 0}
               className="gap-2"
             >
@@ -338,6 +348,43 @@ export default function MessagesList() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
+              <AlertTriangle className="h-5 w-5" />
+              Konfirmasi Hapus
+            </DialogTitle>
+            <DialogDescription className="text-base pt-2">
+              Apakah Anda yakin ingin menghapus{' '}
+              <span className="font-semibold text-slate-900 dark:text-white">
+                {selectedMessages.size} pesan
+              </span>
+              ? Tindakan ini tidak dapat dibatalkan.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleConfirmDelete}
+              className="gap-2"
+            >
+              <Trash2 className="h-4 w-4" />
+              Hapus {selectedMessages.size} Pesan
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

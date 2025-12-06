@@ -113,6 +113,49 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Create notification for the new message
+    const notification = await prisma.notification.create({
+      data: {
+        title: `Pesan baru dari ${user.name || user.email}`,
+        message: `Subject: ${subject}`,
+        type: 'message',
+        messageId: newMessage.id,
+      },
+      include: {
+        messageData: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // Broadcast notification via WebSocket
+    try {
+      // Import dynamically to avoid issues
+      const { broadcastNotification } = await import('@/src/lib/websocket');
+      broadcastNotification({
+        id: notification.id,
+        title: notification.title,
+        message: notification.message,
+        type: notification.type,
+        isRead: notification.isRead,
+        createdAt: notification.createdAt.toISOString(),
+        messageId: notification.messageId || undefined,
+      });
+    } catch (wsError) {
+      console.error('Error broadcasting notification:', wsError);
+      // Don't fail the request if WebSocket broadcast fails
+    }
+
+
     return NextResponse.json(
       {
         success: true,
