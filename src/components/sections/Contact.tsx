@@ -236,7 +236,11 @@ const Contact = () => {
                       <div
                         className={`shrink-0 h-14 w-14 rounded-xl ${info.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                       >
-                        <info.icon className={`h-7 w-7 bg-linear-to-br ${info.color} bg-clip-text text-transparent`} />
+                        <info.icon className={`h-7 w-7 ${
+                          info.title === 'Email' ? 'text-blue-600 dark:text-blue-400' :
+                          info.title === 'Phone' ? 'text-green-600 dark:text-green-400' :
+                          'text-purple-600 dark:text-purple-400'
+                        }`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">
