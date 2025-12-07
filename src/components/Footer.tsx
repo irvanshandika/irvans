@@ -167,24 +167,24 @@ const Footer = () => {
 
         {/* Newsletter Section */}
         <div className="py-8 border-t border-slate-200 dark:border-slate-800">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+            <div className="text-center">
+              <h4 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white mb-2">
                 Stay Updated
               </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
                 Subscribe to get notified about new projects and articles.
               </p>
             </div>
-            <div className="flex gap-2 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 flex-1 md:w-64"
+                className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 flex-1 text-sm"
               />
-              <button className="px-6 py-2 rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 text-white font-medium hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 flex items-center gap-2 group">
+              <button className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 text-white font-medium hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 group whitespace-nowrap text-sm">
                 <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                Subscribe
+                <span>Subscribe</span>
               </button>
             </div>
           </div>

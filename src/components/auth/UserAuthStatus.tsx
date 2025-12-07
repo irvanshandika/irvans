@@ -43,14 +43,14 @@ export function UserAuthStatus() {
 
   if (!session) {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-1.5 sm:gap-2">
         <Link href="/auth/login" aria-label="Login">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="h-8 px-2.5 text-xs sm:h-9 sm:px-3 sm:text-sm">
             Login
           </Button>
         </Link>
         <Link href="/auth/register" aria-label="Register">
-          <Button size="sm">Register</Button>
+          <Button size="sm" className="h-8 px-2.5 text-xs sm:h-9 sm:px-3 sm:text-sm">Register</Button>
         </Link>
       </div>
     );
@@ -72,22 +72,22 @@ export function UserAuthStatus() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 rounded-full border border-border bg-background p-1 hover:bg-accent hover:text-accent-foreground transition-colors">
+          <button className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-border bg-background p-0.5 sm:p-1 hover:bg-accent hover:text-accent-foreground transition-colors">
             <Image
               src={session.user?.image || '/placeholder.svg'}
               alt={session.user?.name || 'Profile'}
-              width={32}
-              height={32}
-              className="rounded-full"
+              width={28}
+              height={28}
+              className="rounded-full sm:w-8 sm:h-8"
             />
-            <span className="text-sm font-medium">{truncateName(session.user?.name)}</span>
+            <span className="hidden md:inline-block text-xs sm:text-sm font-medium pr-1">{truncateName(session.user?.name)}</span>
             <svg
-              width="16"
-              height="16"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-1 text-muted-foreground"
+              className="mr-0.5 sm:mr-1 text-muted-foreground hidden md:block"
             >
               <path
                 d="M6 9L12 15L18 9"
