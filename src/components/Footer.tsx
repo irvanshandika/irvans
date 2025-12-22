@@ -5,7 +5,6 @@ import {
   Mail,
   Heart,
   MapPin,
-  Phone,
   Send,
   Twitter,
   Instagram,
@@ -69,11 +68,6 @@ const Footer = () => {
     {
       icon: MapPin,
       text: 'Indonesia',
-    },
-    {
-      icon: Phone,
-      text: '+62 858 4556 1655',
-      href: 'tel:+6285845561655',
     },
     {
       icon: Mail,
@@ -244,7 +238,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
     </footer>
   );
 };

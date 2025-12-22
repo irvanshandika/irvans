@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Mail,
   MapPin,
-  Phone,
   Send,
   LogIn,
   UserPlus,
@@ -126,15 +125,6 @@ const Contact = () => {
       description: 'Send me an email anytime',
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-blue-50 dark:bg-blue-950/30',
-    },
-    {
-      icon: Phone,
-      title: 'Phone',
-      value: '+62 584 556 1655',
-      link: 'https://wa.me/625845561655',
-      description: 'Available Mon-Fri, 9AM-5PM',
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-50 dark:bg-green-950/30',
     },
     {
       icon: MapPin,
