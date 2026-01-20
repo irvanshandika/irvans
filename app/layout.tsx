@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'YOUR_GOOGLE_VERIFICATION_ID',
+    google: 'google-site-verification=vjyBn3kassYJZx_YB1qNMiAYFiSSpLe2ZmDcLc8ZJ5s',
   },
 };
 
@@ -55,6 +55,7 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href="https://irvans.my.id" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="CmOV1kxhYCpp62H4QNem7w" async></script>
       </head>
       <body className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-300">
         <AuthProvider>
